@@ -5,5 +5,6 @@ const router=express.Router();
 
 
 router.get('/',auth.welcome)
+router.post("/pre-register",auth.preRegister) //Until they validiate with comformation email
 
 export default router
