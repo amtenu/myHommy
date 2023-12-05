@@ -8,5 +8,7 @@ router.get('/',auth.welcome)
 router.post("/pre-register",auth.preRegister) //Until they validiate with comformation email
 router.post("/register",auth.register)
 router.post("/login",auth.login)
+router.post('/forgotpassword',auth.forgotPassword)
+router.post('/accessaccount',auth.accessaccount)
 
 export default router

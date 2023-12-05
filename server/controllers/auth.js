@@ -134,3 +134,71 @@ export const login = async (req, res) => {
     return res.json({ error: "Cann't login , please check." });
   }
 };
+
+export const forgotPassword = async (req, res) => {
+  try {
+    //email
+    const { email } = req.body;
+    const user = await User.findOne({
+      email,
+    });
+    if (!user) {
+      return res.json({
+        error: "Could not find user with this" + `${email}` + "email",
+      });
+    } else {
+      const resetCode = nanoid();
+      user.resetCode = resetCode;
+      user.save();
+      const token = jwt.sign({ resetCode }, config.JWT_SECRET, {
+        expiresIn: "1hr",
+      });
+      config.AWSSES.sendEmail(
+        emailTemplate(email, `
+        <p>Click the below link to access your account</p>
+        <a href="${config.CLIENT_URL}/auth/access-account/${token}"> Access my account</a>
+        `, config.EMAIL_TO, "Access Your Account"),
+        (err, data) => {
+          if (err) {
+            console.log(err);
+            return res.json({ ok: false });
+          } else {
+            console.log(data);
+            return res.json({ ok: true });
+          }
+        }
+      );
+    }
+  } catch (err) {
+    console.log(err);
+    res.json({ err: "Something went wrong!" });
+  }
+};
+
+
+export const accessaccount=async (req,res)=>{
+  try {
+   const { resetCode } = jwt.verify(req.body.resetCode,config.JWT_SECRET)// token with another name 
+   const user= await User.findOneAndUpdate({resetCode:resetCode},{resetCode:""})
+
+   const token = jwt.sign({ _id: user._id }, config.JWT_SECRET, {
+    expiresIn: "1h",
+  });
+
+  const refereshToken = jwt.sign({ _id: user._id }, config.JWT_SECRET, {
+    expiresIn: "7d",
+  });
+
+  user.password = undefined;
+  user.resetCode = undefined;
+
+  return res.json({
+    token,
+    refereshToken,
+    user,
+  });
+  } catch (err){
+    console.log(err)
+    res.json({error:"Something went wrong"})
+  }
+}
