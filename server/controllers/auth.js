@@ -4,7 +4,7 @@ import { emailTemplate } from "../helpers/email.js";
 import { hashPassword, comparePassword } from "../helpers/auth.js";
 import User from "../models/user.js";
 import { nanoid } from "nanoid";
-import { response } from "express";
+import emailVaidator from "email-validator";
 
 export const welcome = (req, res) => {
   res.json({
@@ -14,7 +14,26 @@ export const welcome = (req, res) => {
 
 export const preRegister = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password } = req.body; //TO DO , validate email
+
+    if (!emailVaidator.validate(email)) {
+      return res.json("Please input a valid email");
+    }
+
+    if (!password) {
+      return res.json({ error: "Password is required!" });
+    }
+    if (password && password?.length < 8) {
+      return res.json({
+        error: "Password length must be at least 8 characters!",
+      });
+    }
+
+    const user = await User.findOne({ email });
+    if (user) {
+      return res.json({ error: "Email already exists" });
+    }
+
     const token = jwt.sign({ email, password }, config.JWT_SECRET, {
       expiresIn: "1h",
     });
@@ -49,6 +68,7 @@ export const register = async (req, res) => {
     //console.log(req.body);
     const { email, password } = jwt.verify(req.body.token, config.JWT_SECRET);
     //console.log(email,password)
+    //TO DO , check about email....
 
     const hashedPassword = await hashPassword(password);
     const user = await new User({
@@ -75,6 +95,6 @@ export const register = async (req, res) => {
     });
   } catch (err) {
     console.log(err);
-    return res.json({error:"Something went wrong"})
+    return res.json({ error: "Something went wrong" });
   }
 };
