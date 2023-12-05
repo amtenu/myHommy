@@ -3,15 +3,15 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "type":"module", 
+  "type": "module",
   "scripts": {
-    "start":"nodemon server.js"
-    
+    "start": "nodemon server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "aws-sdk": "^2.1511.0",
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
     "email-validator": "^2.0.4",
