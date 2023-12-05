@@ -47,9 +47,8 @@ const schema= new Schema({
     },
 
     enquiredProperties:[{type:ObjectId,ref:"Ad"}],
-    wishlist:[[{type:ObjectId,ref:"Ad"}]],
-    resetCode:"",
-
+    wishlist:[{type:ObjectId,ref:"Ad"}],
+    resetCode:{},
 
 },{timestamps:true})
 
