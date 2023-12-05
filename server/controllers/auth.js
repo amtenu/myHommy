@@ -43,8 +43,8 @@ export const preRegister = async (req, res) => {
 export const register = async (req, res) => {
   try {
     //console.log(req.body);
-const decoded=jwt.verify(req.body.token,config.JWT_SECRET);
-console.log(decoded)
+const {email,password}=jwt.verify(req.body.token,config.JWT_SECRET);
+//console.log(email,password)
 
   } catch (err) {
     console.log(err);
