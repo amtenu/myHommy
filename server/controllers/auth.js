@@ -98,3 +98,39 @@ export const register = async (req, res) => {
     return res.json({ error: "Something went wrong" });
   }
 };
+
+export const login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    //find user by thier email
+    // compare with db
+    // jwt oken and respond
+
+    const user = await User.findOne({
+      email,
+    });
+
+    const match = await comparePassword(password, user.password);
+    if (!match) {
+      return res.json({ error: "Wrong password" });
+    }
+    const token = jwt.sign({ _id: user._id }, config.JWT_SECRET, {
+      expiresIn: "1h",
+    });
+
+    const refereshToken = jwt.sign({ _id: user._id }, config.JWT_SECRET, {
+      expiresIn: "7d",
+    });
+
+    user.password = undefined;
+    user.resetCode = undefined;
+
+    return res.json({
+      token,
+      refereshToken,
+      user,
+    });
+  } catch (err) {
+    return res.json({ error: "Cann't login , please check." });
+  }
+};
