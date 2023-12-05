@@ -1,4 +1,5 @@
 import * as config from "../config.js";
+import jwt from "jsonwebtoken";
 
 export const welcome = (req, res) => {
   res.json({
@@ -8,6 +9,10 @@ export const welcome = (req, res) => {
 
 export const preRegister = async (req, res) => {
   try {
+    const { email, password } = req.body;
+    const token = jwt.sign({ email, password }, config.JWT_SECRET, {
+      expiresIn: "1h",
+    });
     config.AWSSES.sendEmail(
       {
         Source: config.EMAIL_FROM,
@@ -19,7 +24,11 @@ export const preRegister = async (req, res) => {
             Html: {
               Charset: "UTF-8",
               Data: `
+             <html>
               <h1>WELCOME TO myHommy</h1>
+              <p>Please click the link below to activate your account. </p>
+              <a href="${config.CLIENT_URL}/auth/account-activate/${token}">Acitivate my account</a>
+</html>
               `,
             },
           },
