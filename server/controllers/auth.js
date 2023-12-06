@@ -154,10 +154,15 @@ export const forgotPassword = async (req, res) => {
         expiresIn: "1hr",
       });
       config.AWSSES.sendEmail(
-        emailTemplate(email, `
+        emailTemplate(
+          email,
+          `
         <p>Click the below link to access your account</p>
         <a href="${config.CLIENT_URL}/auth/access-account/${token}"> Access my account</a>
-        `, config.EMAIL_TO, "Access Your Account"),
+        `,
+          config.EMAIL_TO,
+          "Access Your Account"
+        ),
         (err, data) => {
           if (err) {
             console.log(err);
@@ -175,30 +180,59 @@ export const forgotPassword = async (req, res) => {
   }
 };
 
-
-export const accessaccount=async (req,res)=>{
+export const accessaccount = async (req, res) => {
   try {
-   const { resetCode } = jwt.verify(req.body.resetCode,config.JWT_SECRET)// token with another name 
-   const user= await User.findOneAndUpdate({resetCode:resetCode},{resetCode:""})
+    const { resetCode } = jwt.verify(req.body.resetCode, config.JWT_SECRET); // token with another name
+    const user = await User.findOneAndUpdate(
+      { resetCode: resetCode },
+      { resetCode: "" }
+    );
 
-   const token = jwt.sign({ _id: user._id }, config.JWT_SECRET, {
-    expiresIn: "1h",
-  });
+    const token = jwt.sign({ _id: user._id }, config.JWT_SECRET, {
+      expiresIn: "1h",
+    });
 
-  const refereshToken = jwt.sign({ _id: user._id }, config.JWT_SECRET, {
-    expiresIn: "7d",
-  });
+    const refereshToken = jwt.sign({ _id: user._id }, config.JWT_SECRET, {
+      expiresIn: "7d",
+    });
 
-  user.password = undefined;
-  user.resetCode = undefined;
+    user.password = undefined;
+    user.resetCode = undefined;
 
-  return res.json({
-    token,
-    refereshToken,
-    user,
-  });
-  } catch (err){
-    console.log(err)
-    res.json({error:"Something went wrong"})
+    return res.json({
+      token,
+      refereshToken,
+      user,
+    });
+  } catch (err) {
+    console.log(err);
+    res.json({ error: "Something went wrong" });
   }
-}
+};
+
+export const refereshToken = async (req, res) => {
+  try {
+    const { _id } = jwt.verify(req.headers.refresh_token, config.JWT_SECRET);
+
+    const user = await User.findById(_id);
+    const token = jwt.sign({ _id: user._id }, config.JWT_SECRET, {
+      expiresIn: "1h",
+    });
+
+    const refereshToken = jwt.sign({ _id: user._id }, config.JWT_SECRET, {
+      expiresIn: "7d",
+    });
+
+    user.password = undefined;
+    user.resetCode = undefined;
+
+    return res.json({
+      token,
+      refereshToken,
+      user,
+    });
+  } catch (err) {
+    console.log(err);
+    return res.status(403).json({ error: "Refresh Token failed" });
+  }
+};
