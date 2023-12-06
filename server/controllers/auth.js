@@ -259,3 +259,24 @@ export const publicProfile = async (req, res) => {
     return res.json({ error: "User not found" });
   }
 };
+
+export const updatePassword = async (req, res) => {
+  try {
+    const { password } = req.body;
+    if (!password) {
+      return res.json({ error: "Password is required" });
+    }
+    if (password && password?.length < 8) {
+      return res.json({ error: "Password is at least 8 characters long" });
+    }
+
+    const user = await User.findByIdAndUpdate(req.user._id, {
+      password: await hashPassword(password),
+    });
+
+    res.json({Ok:true})
+  } catch (err) {
+    console.log(err);
+    return res.json({ error: "User not found" });
+  }
+};
