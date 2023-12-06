@@ -12,6 +12,7 @@ router.post("/login",auth.login)
 router.post('/forgotpassword',auth.forgotPassword)
 router.post('/accessaccount',auth.accessaccount)
 router.get('/referesh-token',auth.refereshToken)
+router.get('/current-user',auth.currentuser)
 
 
 export default router

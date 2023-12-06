@@ -236,3 +236,15 @@ export const refereshToken = async (req, res) => {
     return res.status(403).json({ error: "Refresh Token failed" });
   }
 };
+
+export const currentuser = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id);
+    user.password = undefined;
+    user.resetCode = undefined;
+    res.json(user);
+  } catch (err) {
+    console.log(err);
+    return res.status(403).json({ error: "Unauthorized" });
+  }
+};
