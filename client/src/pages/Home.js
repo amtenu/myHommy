@@ -1,7 +1,11 @@
-export default function Home(){
-    return (
-        <div>
-             <h1 className="display-1 bg-primary text-light p-5">Home</h1>
-        </div>
-    )
+
+import { useAuth } from "../context/auth";
+export default function Home() {
+  const [auth, setAuth] = useAuth();
+  return (
+    <div>
+      <h1 className="display-1 bg-primary text-light p-5">Home</h1>
+      <pre>{JSON.stringify(auth,null,5)}</pre>
+    </div>
+  );
 }
