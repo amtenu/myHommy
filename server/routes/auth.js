@@ -15,6 +15,8 @@ router.get('/referesh-token',auth.refereshToken)
 router.get('/current-user',requireSignin,auth.currentuser)
 router.get('/profile/:username',auth.publicProfile)
 router.put('/update-password',requireSignin,auth.updatePassword)
+router.put('/update-profile',requireSignin,auth.updateProfile)
+
 
 
 export default router
