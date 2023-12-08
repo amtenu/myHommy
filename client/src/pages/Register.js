@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
-import { API } from "../config/config";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
   //state to use
@@ -11,6 +11,8 @@ export default function Home() {
   const [loading, setLoading] = useState(false); //redirecting
 
   //hooks
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,6 +30,7 @@ export default function Home() {
       } else {
         toast.success("Please check your email to activate account");
         setLoading(false);
+        navigate("/");
       }
 
       console.log(data);
