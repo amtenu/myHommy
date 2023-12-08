@@ -1,22 +1,27 @@
-import { useState, createContext, useContext } from "react";
+  import { useState, createContext, useContext } from "react";
+  import axios from "axios";
+  import { API } from "../config/config";
 
+  const AuthContext = createContext();
 
-const AuthContext = createContext();
+  const AuthProvider = ({ children }) => {
+    const [auth, setAuth] = useState({
+      user: null,
+      token: "",
+      refreshToken: "",
+    });
 
-const AuthProvider = ({ children }) => {
-  const [auth, setAuth] = useState({
-    user: null,
-    token: "",
-    refreshToken: "",
-  });
+    //config axios
 
-  return (
-    <AuthContext.Provider value={[auth, setAuth]}>
-      {children}
-    </AuthContext.Provider>
-  );
-};
+    axios.defaults.baseURL = API;
 
-const useAuth = () => useContext(AuthContext);
+    return (
+      <AuthContext.Provider value={[auth, setAuth]}>
+        {children}
+      </AuthContext.Provider>
+    );
+  };
 
-export { AuthProvider, useAuth };
+  const useAuth = () => useContext(AuthContext);
+
+  export { AuthProvider, useAuth };

@@ -18,7 +18,7 @@ export default function Home() {
     try {
       setLoading(true);
       // const res= await axios.post(`${API}/register`,{email,password});//generic responce so we need data
-      const { data } = await axios.post(`${API}/pre-register`, {
+      const { data } = await axios.post(`/pre-register`, {
         email,
         password,
       });
