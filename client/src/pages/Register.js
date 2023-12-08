@@ -1,20 +1,40 @@
 import { useState } from "react";
 import axios from "axios";
 import { API } from "../config/config";
+import toast from "react-hot-toast";
+
 export default function Home() {
   //state to use
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false); //redirecting
+
+  //hooks
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
+      setLoading(true);
       // const res= await axios.post(`${API}/register`,{email,password});//generic responce so we need data
-      const { data } = await axios.post(`${API}/pre-register`, { email, password });
+      const { data } = await axios.post(`${API}/pre-register`, {
+        email,
+        password,
+      });
+      if (data?.error) {
+        toast.error(data.error);
+        setLoading(false);
+      } else {
+        toast.success("Please check your email to activate account");
+        setLoading(false);
+      }
+
       console.log(data);
     } catch (err) {
       console.log(err);
+      toast.error("something went wrong.Please try again");
+      setLoading(false);
     }
   };
   return (
@@ -34,7 +54,7 @@ export default function Home() {
                 value={email}
               />
               <input
-                type="text"
+                type="password"
                 placeholder="Enter your Password"
                 className="form-control mb-4"
                 required
@@ -42,7 +62,12 @@ export default function Home() {
                 onChange={(e) => setPassword(e.target.value)}
                 value={password}
               />
-              <button className="btn btn-primary col-12 mb-4">Register</button>
+              <button
+                disabled={loading}
+                className="btn btn-primary col-12 mb-4"
+              >
+                {loading ? "Waiting ..." : "Register"}
+              </button>
             </form>
           </div>
         </div>
