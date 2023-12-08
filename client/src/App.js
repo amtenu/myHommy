@@ -19,7 +19,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route
-            path="/auth/activate-account/:token"
+            path="/auth/account-activate/:token"
             element={<AccountActivate />}
           ></Route>
         </Routes>
