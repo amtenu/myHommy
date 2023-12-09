@@ -8,43 +8,58 @@ export default function Main() {
   //remove saved data
   //redirect to login
   const [auth, setAuth] = useAuth();
- const navigate=useNavigate()
+  const navigate = useNavigate();
   const logout = () => {
     setAuth({ user: null, token: "", refreshToken: "" });
-    localStorage.removeItem('data')
-    navigate('/login')
+    localStorage.removeItem("data");
+    navigate("/login");
   };
+
+  //Check if we have a logged in user
+  //apply to the links and use to logout
+  const loggedIn =
+    auth.user !== null && auth.token !== " " && auth.refereshToken !== " ";
 
   return (
     <nav className="nav d-flex justify-content-between lead">
       <NavLink className="nav-link " aria-current="page" to="/">
         Home
       </NavLink>
-      <NavLink className="nav-link" to="/login">
-        Login
-      </NavLink>
-      <NavLink className="nav-link" to="/register">
-        Register
-      </NavLink>
-      <div className="dropdown">
-        <li>
-          <a className="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-            User
-          </a>
-          <ul className="dropdown-menu">
-            <li>
-              <NavLink className="nav-link " to="/dashbord">
-                Dashboard
-              </NavLink>
-            </li>
-            <li>
-              <a onClick={logout} className="nav-link">
-                Logout
-              </a>
-            </li>
-          </ul>
-        </li>
-      </div>
+      {!loggedIn ? (
+        <>
+          <NavLink className="nav-link" to="/login">
+            Login
+          </NavLink>
+          <NavLink className="nav-link" to="/register">
+            Register
+          </NavLink>
+        </>
+      ) : (
+        ""
+      )}
+      {loggedIn ? (
+        <div className="dropdown">
+          <li>
+            <a className="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+              {auth?.user?.name ? auth.user.name : auth.user.username}
+            </a>
+            <ul className="dropdown-menu">
+              <li>
+                <NavLink className="nav-link " to="/dashboard">
+                  Dashboard
+                </NavLink>
+              </li>
+              <li>
+                <a onClick={logout} className="nav-link">
+                  Logout
+                </a>
+              </li>
+            </ul>
+          </li>
+        </div>
+      ) : (
+        ""
+      )}
     </nav>
   );
 }
