@@ -3,7 +3,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
-export default function Home() {
+export default function Register() {
   //state to use
 
   const [email, setEmail] = useState("");
