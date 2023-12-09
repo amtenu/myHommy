@@ -7,6 +7,8 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import AccountActivate from "./pages/auth/AccountActivate";
+import ForgotPassword from "./pages/auth/ForgotPassword";
+import AccessAccount from "./pages/auth/AccessAccount";
 
 function App() {
   return (
@@ -21,6 +23,14 @@ function App() {
           <Route
             path="/auth/account-activate/:token"
             element={<AccountActivate />}
+          ></Route>
+          <Route
+            path="/auth/forgot-password"
+            element={<ForgotPassword />}
+          ></Route>
+          <Route
+            path="/auth/access-account/:token"
+            element={<AccessAccount />}
           ></Route>
         </Routes>
       </AuthProvider>

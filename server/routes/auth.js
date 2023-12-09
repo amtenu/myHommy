@@ -10,7 +10,7 @@ router.post("/pre-register",auth.preRegister) //Until they validiate with comfor
 router.post("/register",auth.register)
 router.post("/login",auth.login)
 router.post('/forgot-password',auth.forgotPassword)
-router.post('/accessaccount',auth.accessaccount)
+router.post('/access-account',auth.accessaccount)
 router.get('/referesh-token',auth.refereshToken)
 router.get('/current-user',requireSignin,auth.currentuser)
 router.get('/profile/:username',auth.publicProfile)
