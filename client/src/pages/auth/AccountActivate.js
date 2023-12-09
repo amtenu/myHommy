@@ -18,6 +18,9 @@ export default function AccountActivate() {
       if (data?.error) {
         toast.error("data.error");
       } else {
+        //To do , We have to save the state
+        //save in local storage
+        localStorage.setItem('auth',JSON.stringify(data));
         setAuth(data);
         toast.success("Successfully logged in , Welcome to myHommy App");
         navigate("/");

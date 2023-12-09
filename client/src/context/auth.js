@@ -1,4 +1,4 @@
-import { useState, createContext, useContext } from "react";
+import { useState, createContext, useContext, useEffect } from "react";
 import axios from "axios";
 import { API } from "../config/config";
 
@@ -10,6 +10,14 @@ const AuthProvider = ({ children }) => {
     token: "",
     refreshToken: "",
   });
+
+  //Check if there is localdata in thelocal storage
+  useEffect(() => {
+    let localStorageData = localStorage.getItem("auth");
+    if (localStorageData) {
+      setAuth(JSON.parse(localStorageData));
+    }
+  }, []);
 
   //config axios
 
