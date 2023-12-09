@@ -1,7 +1,20 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { NavLink } from "react-router-dom";
+import { useAuth } from "../../context/auth";
+import { useNavigate } from "react-router-dom";
 
 export default function Main() {
+  //To do , when logged in , hide login and regster
+  //remove saved data
+  //redirect to login
+  const [auth, setAuth] = useAuth();
+ const navigate=useNavigate()
+  const logout = () => {
+    setAuth({ user: null, token: "", refreshToken: "" });
+    localStorage.removeItem('data')
+    navigate('/login')
+  };
+
   return (
     <nav className="nav d-flex justify-content-between lead">
       <NavLink className="nav-link " aria-current="page" to="/">
@@ -25,7 +38,9 @@ export default function Main() {
               </NavLink>
             </li>
             <li>
-              <a className="nav-link">Logout</a>
+              <a onClick={logout} className="nav-link">
+                Logout
+              </a>
             </li>
           </ul>
         </li>
