@@ -23,28 +23,37 @@ export default function AdCreate() {
       <Sidebar />
       <div
         className="d-flex justify-content-center align-items-center vh-100"
-        style={{ marginTop: "-14%" }}
+        style={{ marginTop: "-9%" }}
       >
         <div className="col-lg-6">
           <button
             onClick={handleRent}
             className="btn btn-primary btn-lg col-12 p-5"
           >
-            Rent
+            <span className="h2">Rent</span>
           </button>
-          {rent && " Show rent house or land option"}
+          {rent && (
+            <div className="my-1">
+              <button className="btn btn-secondary p-5 col-6">House</button>
+              <button className="btn btn-secondary p-5 col-6">Land</button>
+            </div>
+          )}
         </div>
-        
+
         <div className="col-lg-6">
           <button
             onClick={handleSell}
             className="btn btn-primary btn-lg col-12 p-5"
           >
-            Sell
+          <span className="h2">Sell</span>
           </button>
-          {sell && "Show sell house or land option"}
+          {sell && (
+            <div className="my-1">
+              <button className="btn btn-secondary p-5 col-6">House</button>
+              <button className="btn btn-secondary p-5 col-6">Land</button>
+            </div>
+          )}
         </div>
-        
       </div>
     </div>
   );
