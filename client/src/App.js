@@ -10,7 +10,8 @@ import AccountActivate from "./pages/auth/AccountActivate";
 import ForgotPassword from "./pages/auth/ForgotPassword";
 import AccessAccount from "./pages/auth/AccessAccount";
 
-import Dashboard from "./pages/user/Dashboard"
+import Dashboard from "./pages/user/Dashboard";
+import PrivateRoute from "./components/routes/PrivateRoute";
 
 function App() {
   return (
@@ -34,7 +35,9 @@ function App() {
             path="/auth/access-account/:token"
             element={<AccessAccount />}
           ></Route>
-          <Route path="/dashboard" element={<Dashboard/>}/>
+          <Route path='/' element={<PrivateRoute/>}>
+            <Route path="dashboard" element={<Dashboard />} />
+          </Route>
         </Routes>
       </AuthProvider>
     </BrowserRouter>
