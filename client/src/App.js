@@ -14,6 +14,11 @@ import Dashboard from "./pages/user/Dashboard";
 import PrivateRoute from "./components/routes/PrivateRoute";
 import AdCreate from "./pages/user/ad/AdCreate";
 
+import RentHouse from "./pages/user/ad/RentHouse";
+import RentLand from "./pages/user/ad/RentLand";
+import SellHouse from "./pages/user/ad/SellHouse";
+import SellLand from "./pages/user/ad/SellLand"
+
 function App() {
   return (
     <BrowserRouter>
@@ -39,6 +44,10 @@ function App() {
           <Route path='/' element={<PrivateRoute/>}>
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="ad/create" element={<AdCreate />} />
+            <Route path="ad/create/rent/House" element={<RentHouse />} />
+            <Route path="ad/create/rent/Land" element={<RentLand />} />
+            <Route path="ad/create/sell/House" element={<SellHouse/>} />
+            <Route path="ad/create/sell/Land" element={<SellLand />} />
           </Route>
         </Routes>
       </AuthProvider>

@@ -34,8 +34,8 @@ export default function AdCreate() {
           </button>
           {rent && (
             <div className="my-1">
-              <button className="btn btn-secondary p-5 col-6">House</button>
-              <button className="btn btn-secondary p-5 col-6">Land</button>
+              <button onClick={()=>navigate('/ad/create/rent/House')}className="btn btn-secondary p-5 col-6">House</button>
+              <button onClick={()=>navigate('/ad/create/rent/Land')}  className="btn btn-secondary p-5 col-6">Land</button>
             </div>
           )}
         </div>
@@ -49,8 +49,8 @@ export default function AdCreate() {
           </button>
           {sell && (
             <div className="my-1">
-              <button className="btn btn-secondary p-5 col-6">House</button>
-              <button className="btn btn-secondary p-5 col-6">Land</button>
+              <button onClick={()=>navigate('/ad/create/sell/House')} className="btn btn-secondary p-5 col-6">House</button>
+              <button onClick={()=>navigate('/ad/create/sell/Land')}className="btn btn-secondary p-5 col-6">Land</button>
             </div>
           )}
         </div>
