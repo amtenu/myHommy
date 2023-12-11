@@ -12,6 +12,7 @@ import AccessAccount from "./pages/auth/AccessAccount";
 
 import Dashboard from "./pages/user/Dashboard";
 import PrivateRoute from "./components/routes/PrivateRoute";
+import AdCreate from "./pages/user/ad/AdCreate";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
           ></Route>
           <Route path='/' element={<PrivateRoute/>}>
             <Route path="dashboard" element={<Dashboard />} />
+            <Route path="ad/create" element={<AdCreate />} />
           </Route>
         </Routes>
       </AuthProvider>

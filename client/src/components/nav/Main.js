@@ -18,7 +18,7 @@ export default function Main() {
   //Check if we have a logged in user
   //apply to the links and use to logout
   const loggedIn =
-    auth.user !== null && auth.token !== " " && auth.refereshToken !== " ";
+    auth.user !== null && auth.token !== " " && auth.refreshToken !== " ";
 
   return (
     <nav className="nav d-flex justify-content-between lead">
