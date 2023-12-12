@@ -27,5 +27,5 @@ export default function PrivateRoute() {
     }
   };
 
-  return ok?<Outlet/> :""
+  return ok?<Outlet/> :"" //Outlet is children props
 }
