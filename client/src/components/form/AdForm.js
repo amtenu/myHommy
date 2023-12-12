@@ -1,11 +1,8 @@
- 
-
- export default function AdForm({action,type}) {
-return(
+export default function AdForm({ action, type }) {
+  return (
     <>
-    <p>This is ad create form
-    </p>
-    {action}/{type}
+      <p>This is ad create form</p>
+      {action}/{type}
     </>
-)
- }
+  );
+}
