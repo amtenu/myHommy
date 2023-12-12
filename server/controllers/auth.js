@@ -81,7 +81,7 @@ export const register = async (req, res) => {
       expiresIn: "1h",
     });
 
-    const refereshToken = jwt.sign({ _id: user._id }, config.JWT_SECRET, {
+    const refreshToken = jwt.sign({ _id: user._id }, config.JWT_SECRET, {
       expiresIn: "7d",
     });
 
@@ -90,7 +90,7 @@ export const register = async (req, res) => {
 
     return res.json({
       token,
-      refereshToken,
+      refreshToken,
       user,
     });
   } catch (err) {
@@ -118,7 +118,7 @@ export const login = async (req, res) => {
       expiresIn: "1h",
     });
 
-    const refereshToken = jwt.sign({ _id: user._id }, config.JWT_SECRET, {
+    const refreshToken = jwt.sign({ _id: user._id }, config.JWT_SECRET, {
       expiresIn: "7d",
     });
 
@@ -127,7 +127,7 @@ export const login = async (req, res) => {
 
     return res.json({
       token,
-      refereshToken,
+      refreshToken,
       user,
     });
   } catch (err) {
@@ -192,7 +192,7 @@ export const accessaccount = async (req, res) => {
       expiresIn: "1h",
     });
 
-    const refereshToken = jwt.sign({ _id: user._id }, config.JWT_SECRET, {
+    const refreshToken = jwt.sign({ _id: user._id }, config.JWT_SECRET, {
       expiresIn: "7d",
     });
 
@@ -201,7 +201,7 @@ export const accessaccount = async (req, res) => {
 
     return res.json({
       token,
-      refereshToken,
+      refreshToken,
       user,
     });
   } catch (err) {
@@ -210,7 +210,7 @@ export const accessaccount = async (req, res) => {
   }
 };
 
-export const refereshToken = async (req, res) => {
+export const refreshToken = async (req, res) => {
   try {
     const { _id } = jwt.verify(req.headers.refresh_token, config.JWT_SECRET);
 
@@ -219,7 +219,7 @@ export const refereshToken = async (req, res) => {
       expiresIn: "1h",
     });
 
-    const refereshToken = jwt.sign({ _id: user._id }, config.JWT_SECRET, {
+    const refreshToken = jwt.sign({ _id: user._id }, config.JWT_SECRET, {
       expiresIn: "7d",
     });
 
@@ -228,7 +228,7 @@ export const refereshToken = async (req, res) => {
 
     return res.json({
       token,
-      refereshToken,
+      refreshToken,
       user,
     });
   } catch (err) {
