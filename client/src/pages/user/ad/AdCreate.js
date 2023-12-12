@@ -14,12 +14,12 @@ export default function AdCreate() {
   };
   const handleSell = () => {
     setSell(true);
-    setRent(false);
+    setRent(false); 
   };
 
   return (
     <div>
-      <h1 className="display-1 bg-primary text-light p-5">Dashboard</h1>
+      <h1 className="display-1 bg-primary text-light p-5">Ad Create</h1>
       <Sidebar />
       <div
         className="d-flex justify-content-center align-items-center vh-100"
