@@ -9,8 +9,8 @@ export default function AdForm({ action, type }) {
     uploading: false,
     price: "",
     address: "",
-    bedroom: "",
-    bathroom: "",
+    bedrooms: "",
+    bathrooms: "",
     carPark: "",
     landsize: "",
     basement: false,
@@ -21,7 +21,7 @@ export default function AdForm({ action, type }) {
   });
   return (
     <>
-      <div className="form-control">
+      <div className="form-control mb-3">
         <GooglePlacesAutocomplete
           apiKey={GOOGLE_PLACES_KEY}
           apiOptions="ca"
@@ -38,7 +38,73 @@ export default function AdForm({ action, type }) {
         defaultValue={ad.price}
         className="form-control mb-3"
         onValueChange={(value) => setAd({ ...ad, price: value })}
+        required
       />
+      <input
+        type="number"
+        min="0"
+        className="form-control mb-3"
+        placeholder="How many bedrooms?"
+        value={ad.bedrooms}
+        onChange={(e) =>
+          setAd({
+            ...ad,
+            bedrooms: e.target.value,
+          })
+        }
+      />
+      <input
+        type="number"
+        min="0"
+        className="form-control mb-3"
+        placeholder="How many bathrooms?"
+        value={ad.bathrooms}
+        onChange={(e) =>
+          setAd({
+            ...ad,
+            bathrooms: e.target.value,
+          })
+        }
+      />
+
+      <input
+        type="text"
+        className="form-control mb-3"
+        placeholder="Land size?"
+        value={ad.landsize}
+        onChange={(e) =>
+          setAd({
+            ...ad,
+            landsize: e.target.value,
+          })
+        }
+      />
+
+      <input
+        type="text"
+        className="form-control mb-3"
+        placeholder="Enter title?"
+        value={ad.title}
+        onChange={(e) =>
+          setAd({
+            ...ad,
+            title: e.target.value,
+          })
+        }
+      />
+
+      <textarea
+        className="form-control mb-3"
+        placeholder="Description?"
+        value={ad.description}
+        onChange={(e) =>
+          setAd({
+            ...ad,
+            description: e.target.value,
+          })
+        }
+      />
+
       <pre>{JSON.stringify(ad, null, 4)}</pre>
     </>
   );
