@@ -6,7 +6,7 @@ export default function RentHouse() {
     <div>
       <h1 className="dispaly-1 bg-primary text-light p-5">Rent House </h1>
       <SideBar />
-      <div classname="container mt-2">
+      <div className="container mt-2">
         <AdForm action="Rent" type="House" />
       </div>
     </div>

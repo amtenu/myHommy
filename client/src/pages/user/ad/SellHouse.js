@@ -6,9 +6,10 @@ export default function SellHouse() {
     <div>
       <h1 className="dispaly-1 bg-primary text-light p-5">Sell House </h1>
       <SideBar />
-      <div classname="container mt-2">
+      <div className="container mt-2">
         <AdForm action="Sell" type="House" />
       </div>
     </div>
   );
 }
+ 
