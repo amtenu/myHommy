@@ -1,12 +1,14 @@
 import Resizer from "react-image-file-resizer";
-import axios from 'axios'
+import axios from "axios";
+import { Avatar } from "antd";
+
 export default function ImageUpload({ ad, setAd }) {
   const handleUpload = async (e) => {
     try {
       let files = e.target.files;
       files = [...files];
       if (files?.length) {
-       // console.log(files);
+        // console.log(files);
         setAd({ ...ad, uploading: true });
 
         files.map((file) => {
@@ -26,7 +28,7 @@ export default function ImageUpload({ ad, setAd }) {
                   setAd((prev) => ({
                     ...prev,
                     photos: [data, ...prev.photos],
-                    uploading:false
+                    uploading: false,
                   }));
                 } catch (err) {
                   console.log(err);
@@ -55,7 +57,7 @@ export default function ImageUpload({ ad, setAd }) {
   return (
     <>
       <label className="btn btn-secondary mb-4">
-        Upload Photos
+        {ad.uploading ? "Processing ....." : "Upload photos"}
         <input
           onChange={handleUpload}
           type="file"
@@ -64,6 +66,15 @@ export default function ImageUpload({ ad, setAd }) {
           hidden
         />
       </label>
+
+      {ad.photos?.map((file) => (
+        <Avatar
+          src={file?.Location}
+          shape="square "
+          size="46"
+          className="ml-2 mb-4"
+        />
+      ))}
     </>
   );
 }
