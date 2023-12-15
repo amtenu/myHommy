@@ -4,5 +4,6 @@ const router=express.Router();
  import {requireSignin} from "../middlewares/auth.js"
 
  router.post('/upload-image',requireSignin,ad.uploadImage)
+ router.post(('/delete-image'),requireSignin,ad.deleteImage)
 
  export default router

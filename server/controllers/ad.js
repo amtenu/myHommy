@@ -9,32 +9,45 @@ export const uploadImage = async (req, res) => {
       "base64"
     );
 
-    const type=image.split(';')[0].split('/')[1]
+    const type = image.split(";")[0].split("/")[1];
 
     //aws s3
 
-    const params={
-        Bucket:'myhommy-bucket',
-        Key:`${nanoid()}.${type}`,
-        Body:base64image,
-        ACL:'public-read',
-        contentEncoding:"base64",
-        contentType:`image/${type}`
-    }
+    const params = {
+      Bucket: "myhommy-bucket",
+      Key: `${nanoid()}.${type}`,
+      Body: base64image,
+      ACL: "public-read",
+      contentEncoding: "base64",
+      contentType: `image/${type}`,
+    };
 
-    config.AWSS3.upload(params,(err,data)=>{
-        if(err){
-            console.log(err);
-            res.sendStatus(400)
-
-        } else {
-            console.log(data),
-            res.send(data)
-        }
-    })
-
+    config.AWSS3.upload(params, (err, data) => {
+      if (err) {
+        console.log(err);
+        res.sendStatus(400);
+      } else {
+        console.log(data), res.send(data);
+      }
+    });
   } catch (err) {
     console.log(err);
     res.json({ error: "Upload failed, Try again." });
+  }
+};
+
+export const deleteImage = (req, res) => {
+  try {
+    const { Key, Bucket } = req.body;
+    config.AWSS3.deleteObject({ Bucket, Key }, (err, data) => {
+      if (err) {
+        console.log(err);
+        res.sendStatus(400);
+      } else {
+        res.send({ ok: true });
+      }
+    });
+  } catch (err) {
+    console.log(err)
   }
 };
