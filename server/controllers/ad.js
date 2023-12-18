@@ -48,6 +48,15 @@ export const deleteImage = (req, res) => {
       }
     });
   } catch (err) {
-    console.log(err)
+    console.log(err);
+  }
+};
+
+export const create = async (req, res) => {
+  try {
+    console.log(req.body);
+  } catch (err) {
+    res.json({ error: "Something went wrong,try again" });
+    console.log(err);
   }
 };

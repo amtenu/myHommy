@@ -3,7 +3,9 @@ import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import { GOOGLE_PLACES_KEY } from "../../config/config";
 import CurrencyInput from "react-currency-input-field";
 import ImageUpload from "./ImageUpload";
-
+import axios from "axios";
+import toast from "react-hot-toast";
+//import { Navigate } from "react-router-dom";
 
 export default function AdForm({ action, type }) {
   const [ad, setAd] = useState({
@@ -20,11 +22,31 @@ export default function AdForm({ action, type }) {
     title: "",
     description: "",
     loading: false,
+    type,
+    action
   });
+
+  const handleClick = async () => {
+    try {
+      setAd({ ...ad, loading: true });
+      const { data } = axios.post("/ad", ad);
+      if (data?.error) {
+        toast.error(data.error);
+        setAd({ ...ad, loading: false });
+      } else {
+        toast.success("Advert created sucessfully");
+
+      }
+    } catch (err) {
+      console.log(err);
+      setAd({ ...ad, loading: false });
+    }
+  };
+
   return (
     <>
       <div className="form-control mb-3">
-        <ImageUpload ad={ad} setAd ={setAd}/>
+        <ImageUpload ad={ad} setAd={setAd} />
         <GooglePlacesAutocomplete
           apiKey={GOOGLE_PLACES_KEY}
           apiOptions="ca"
@@ -107,7 +129,9 @@ export default function AdForm({ action, type }) {
           })
         }
       />
-
+      <button onClick={handleClick} className="btn btn-primary">
+        Submit
+      </button>
       <pre>{JSON.stringify(ad, null, 4)}</pre>
     </>
   );
