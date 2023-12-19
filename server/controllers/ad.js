@@ -61,29 +61,36 @@ export const create = async (req, res) => {
     // console.log(req.body);
     const { photos, description, title, address, price, type, landsize } =
       req.body;
-      if(!photos.length){
-        return res.json({error:"Photos are required"})
-        
-      }
-      if(!price){
-        return res.json({error:"Price is required"})
-        
-      }
-      if(!address){
-        return res.json({error:"Address is required"})
-        
-      }
-      if(!type){
-        return res.json({error:"Is property house or land"})
-        
-      }
-      if(!description){
-        return res.json({error:"Please describe the propery"})
-        
-      }
+    if (!photos.length) {
+      return res.json({ error: "Photos are required" });
+    }
+    if (!price) {
+      return res.json({ error: "Price is required" });
+    }
+    if (!address) {
+      return res.json({ error: "Address is required" });
+    }
+    if (!type) {
+      return res.json({ error: "Is property house or land" });
+    }
+    if (!description) {
+      return res.json({ error: "Please describe the propery" });
+    }
 
-      const geo=await config.GOOGLE_GEOCODER.geocode(address)
-      console.log("Geo=>",geo)
+    const geo = await config.GOOGLE_GEOCODER.geocode(address);
+    console.log("Geo=>", geo);
+
+    const ad = await new Ad({
+      ...req.body,
+      postedBy: req.body._id,
+      location: {
+        type: "Point",
+        coordinate: [geo?.[0]?.longitude, geo?.[0].latitude],
+      },
+      googleMap: geo,
+    });
+     
+    ad.save();
   } catch (err) {
     res.json({ error: "Something went wrong,try again" });
     console.log(err);
