@@ -30,7 +30,7 @@ export default function AdForm({ action, type }) {
     try {
       setAd({ ...ad, loading: true });
       const { data } = await axios.post("/ad", ad);
-      console.log("Ad create response =>",data)
+      console.log("Ad create response =>", data);
       if (data?.error) {
         toast.error(data.error);
         setAd({ ...ad, loading: false });
@@ -59,13 +59,15 @@ export default function AdForm({ action, type }) {
           }}
         />
       </div>
-      <CurrencyInput
-        placeholder="Please Enter price"
-        defaultValue={ad.price}
-        className="form-control mb-3"
-        onValueChange={(value) => setAd({ ...ad, price: value })}
-        required
-      />
+      <div style={{marginTop: "80px"}}>
+        <CurrencyInput
+          placeholder="Please Enter price"
+          defaultValue={ad.price}
+          className="form-control mb-3"
+          onValueChange={(value) => setAd({ ...ad, price: value })}
+          required
+        />
+      </div>
       <input
         type="number"
         min="0"
