@@ -7,17 +7,17 @@ const schema = new Schema({
   address: { type: String, maxLength: 255, required: true },
   bedroom: Number,
   bedRoom: Number,
-  landsize: Number,
+  landsize: String,
   carpark: Number,
   location: {
     type: {
       type: String,
-      enum: ["point"],
+      enum: ["Point"],
       default: "Point",
     },
     coordinates: {
       type: [Number],
-      default: [51.04731, -114.057968],
+      default: [-114.057968,51.04731],
     },
   },
   title: {
