@@ -89,8 +89,23 @@ export const create = async (req, res) => {
       },
       googleMap: geo,
     });
-     
+
     ad.save();
+
+    // user role is seller now since defaut is buyer
+
+    const user = await User.findByIdAndUpdate(
+      req.user._id,
+      {
+        $addToSet: { role: "Seller" }, //
+      },
+      { new: true }
+    );
+
+    user.password=undefined
+    user.resetCode=undefined
+
+    res.json({ad,user})
   } catch (err) {
     res.json({ error: "Something went wrong,try again" });
     console.log(err);
