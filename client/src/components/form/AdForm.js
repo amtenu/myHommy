@@ -5,7 +5,7 @@ import CurrencyInput from "react-currency-input-field";
 import ImageUpload from "./ImageUpload";
 import axios from "axios";
 import toast from "react-hot-toast";
-//import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function AdForm({ action, type }) {
   const [ad, setAd] = useState({
@@ -23,23 +23,24 @@ export default function AdForm({ action, type }) {
     description: "",
     loading: false,
     type,
-    action
+    action,
   });
 
   const handleClick = async () => {
     try {
       setAd({ ...ad, loading: true });
-      const { data } = axios.post("/ad", ad);
+      const { data } = await axios.post("/ad", ad);
+      console.log("Ad create response =>",data)
       if (data?.error) {
         toast.error(data.error);
         setAd({ ...ad, loading: false });
       } else {
         toast.success("Advert created sucessfully");
-
       }
     } catch (err) {
       console.log(err);
       setAd({ ...ad, loading: false });
+      //navigate('./dashboard')
     }
   };
 
