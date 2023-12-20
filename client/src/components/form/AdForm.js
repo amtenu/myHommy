@@ -26,7 +26,7 @@ export default function AdForm({ action, type }) {
     action,
   });
 
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
   const handleClick = async () => {
     try {
@@ -42,7 +42,7 @@ export default function AdForm({ action, type }) {
     } catch (err) {
       console.log(err);
       setAd({ ...ad, loading: false });
-      navigate('/dashboard')
+      navigate("/dashboard");
     }
   };
 
@@ -61,7 +61,7 @@ export default function AdForm({ action, type }) {
           }}
         />
       </div>
-      <div style={{marginTop: "80px"}}>
+      <div style={{ marginTop: "80px" }}>
         <CurrencyInput
           placeholder="Please Enter price"
           defaultValue={ad.price}
@@ -70,32 +70,52 @@ export default function AdForm({ action, type }) {
           required
         />
       </div>
-      <input
-        type="number"
-        min="0"
-        className="form-control mb-3"
-        placeholder="How many bedrooms?"
-        value={ad.bedrooms}
-        onChange={(e) =>
-          setAd({
-            ...ad,
-            bedrooms: e.target.value,
-          })
-        }
-      />
-      <input
-        type="number"
-        min="0"
-        className="form-control mb-3"
-        placeholder="How many bathrooms?"
-        value={ad.bathrooms}
-        onChange={(e) =>
-          setAd({
-            ...ad,
-            bathrooms: e.target.value,
-          })
-        }
-      />
+      {type === "House" ? (
+        <>
+          {" "}
+          <input
+            type="number"
+            min="0"
+            className="form-control mb-3"
+            placeholder="How many bedrooms?"
+            value={ad.bedrooms}
+            onChange={(e) =>
+              setAd({
+                ...ad,
+                bedrooms: e.target.value,
+              })
+            }
+          />
+          <input
+            type="number"
+            min="0"
+            className="form-control mb-3"
+            placeholder="How many bathrooms?"
+            value={ad.bathrooms}
+            onChange={(e) =>
+              setAd({
+                ...ad,
+                bathrooms: e.target.value,
+              })
+            }
+          />
+          <input
+            type="number"
+            min="0"
+            className="form-control mb-3"
+            placeholder="How many carparks?"
+            value={ad.carPark}
+            onChange={(e) =>
+              setAd({
+                ...ad,
+                carPark: e.target.value,
+              })
+            }
+          />
+        </>
+      ) : (
+        ""
+      )}
 
       <input
         type="text"
@@ -134,11 +154,12 @@ export default function AdForm({ action, type }) {
           })
         }
       />
-      <button onClick={handleClick} className={`btn btn-primary mb-5 ${ad.loading? "disabled" : ''} `}>
-        {ad.loading ? "Saving ...." :"Submit"}
+      <button
+        onClick={handleClick}
+        className={`btn btn-primary mb-5 ${ad.loading ? "disabled" : ""} `}
+      >
+        {ad.loading ? "Saving ...." : "Submit"}
       </button>
-      
-
 
       {/*<pre>{JSON.stringify(ad, null, 4)}</pre>*/}
     </>
