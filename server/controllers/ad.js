@@ -119,6 +119,13 @@ export const ads = async (req, res) => {
       .select("-googleMap -location -photo.Key -photo.key -photo.Etag")
       .sort({ CreatedAt: -1 })
       .limit(12);
+
+    const adsForRent = await Ad.find({ action: "Rent" })
+      .select("-googleMap -location -photo.Key -photo.key -photo.Etag")
+      .sort({ CreatedAt: -1 })
+      .limit(12);
+
+    res.json({ adsForSell, adsForRent });
   } catch (err) {
     console.log(err);
   }
