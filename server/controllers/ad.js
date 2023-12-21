@@ -88,7 +88,7 @@ export const create = async (req, res) => {
         coordinate: [geo?.[0]?.longitude, geo?.[0].latitude],
       },
       googleMap: geo,
-      slug:slugify(`${type}-${address}-${price}-${nanoid(6)}`) //unique slug
+      slug: slugify(`${type}-${address}-${price}-${nanoid(6)}`), //unique slug
     });
 
     ad.save();
@@ -103,12 +103,23 @@ export const create = async (req, res) => {
       { new: true }
     );
 
-    user.password=undefined
-    user.resetCode=undefined
+    user.password = undefined;
+    user.resetCode = undefined;
 
-    res.json({ad,user})
+    res.json({ ad, user });
   } catch (err) {
     res.json({ error: "Something went wrong,try again" });
+    console.log(err);
+  }
+};
+
+export const ads = async (req, res) => {
+  try {
+    const adsForSell = await Ad.find({ action: "Sell" })
+      .select("-googleMap -location -photo.Key -photo.key -photo.Etag")
+      .sort({ CreatedAt: -1 })
+      .limit(12);
+  } catch (err) {
     console.log(err);
   }
 };
