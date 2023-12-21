@@ -5,8 +5,8 @@ const schema = new Schema({
 
   price: { type: Number, maxLength: 255 },
   address: { type: String, maxLength: 255, required: true },
-  bedroom: Number,
-  bedRoom: Number,
+  bedrooms: Number,
+  bathrooms: Number,
   landsize: String,
   carpark: Number,
   location: {
