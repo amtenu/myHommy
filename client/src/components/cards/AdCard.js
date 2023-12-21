@@ -11,14 +11,14 @@ export default function AdCard({ ad }) {
       <div className="Card hoverable shadow">
         <img
           src={ad?.photos?.[0].Location}
-          alt={`${ad?.type}-${ad?.adress}-${ad?.action}-${ad?.price}`}
+          alt={`${ad?.type}-${ad?.address}-${ad?.action}-${ad?.price}`}
           style={{ height: "250px", objectFit: "cover" }}
         />
       </div>
       <div className="card-body">
-        <div className="d-flex justify-content-between">
-          <h3>CAD&nbsp;{format(ad?.price)}</h3>
-        </div>
+        <h3>CAD&nbsp;{format(ad?.price)}</h3>
+        <p>{ad?.address}</p>
+
         <p className="card-text d-flex justify-content-between">
           {ad?.bedrooms ? (
             <span>
