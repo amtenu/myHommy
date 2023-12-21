@@ -1,3 +1,7 @@
+import { IoBedOutline } from "react-icons/io5";
+import { TbBath } from "react-icons/tb";
+import { BiArea } from "react-icons/bi";
+
 export default function AdCard({ ad }) {
   return (
     <div className="col-lg-4 p-4 gx-4 gy-4">
@@ -10,9 +14,31 @@ export default function AdCard({ ad }) {
       </div>
       <div className="card-body">
         <div className="d-flex justify-content-between">
-            <h3>{ad?.price}</h3>
+          <h3>{ad?.price}</h3>
         </div>
-        <p>Ad features </p>
+        <p className="card-text d-flex justify-content-between">
+          {ad?.bedrooms ? (
+            <span>
+              <IoBedOutline /> {ad?.bedrooms}
+            </span>
+          ) : (
+            ""
+          )}{" "}
+          {ad?.bathrooms ? (
+            <span>
+              <TbBath /> {ad?.bathrooms}
+            </span>
+          ) : (
+            ""
+          )}{" "}
+          {ad?.landsize? (
+            <span>
+              <BiArea /> {ad?.landsize}
+            </span>
+          ) : (
+            ""
+          )}{" "}
+        </p>
       </div>
     </div>
   );

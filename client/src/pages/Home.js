@@ -32,7 +32,7 @@ export default function Home() {
       <div className="container">
         <div className="row">
           {adsForSell?.map((ad) => (
-            <AdCard ad={ad} Key={ad._id} />
+            <AdCard ad={ad} key={ad._id} />
           ))}
         </div>
       </div>
@@ -42,7 +42,7 @@ export default function Home() {
       <div className="container">
         <div className="row">
           {adsForRent?.map((ad) => (
-            <AdCard ad={ad} Key={ad._id} />
+            <AdCard ad={ad} key={ad._id} />
           ))}
         </div>
       </div>
