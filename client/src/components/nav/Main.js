@@ -11,7 +11,7 @@ export default function Main() {
   const navigate = useNavigate();
   const logout = () => {
     setAuth({ user: null, token: "", refreshToken: "" });
-    localStorage.removeItem("data");
+    localStorage.removeItem("auth");
     navigate("/login");
   };
 
