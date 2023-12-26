@@ -3,6 +3,7 @@ import { nanoid } from "nanoid";
 import User from "../models/user.js";
 import slugify from "slugify";
 import Ad from "../models/ad.js";
+import ad from "../models/ad.js";
 
 export const uploadImage = async (req, res) => {
   try {
@@ -126,6 +127,19 @@ export const ads = async (req, res) => {
       .limit(12);
 
     res.json({ adsForSell, adsForRent });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const read = async (req, res) => {
+  try {
+    const ad = await Ad.findOne({ slug: req.params.slug }).populate(
+      "postedBy",
+      "name username email phone compny photo.location"
+    );
+    console.log(ad);
+    res.json({ ad });
   } catch (err) {
     console.log(err);
   }
