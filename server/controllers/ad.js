@@ -138,8 +138,23 @@ export const read = async (req, res) => {
       "postedBy",
       "name username email phone compny photo.location"
     );
-    console.log(ad);
+   
     res.json({ ad });
+
+    //related data
+
+    const relatedData = await ad
+      .find({
+        _id: { $ne: ad._id }, // Not include itself
+        action: ad.action,
+        type: ad.type,
+        address: {
+          $regex: ad.googleMap.city[0].city,
+          $options: "i",
+        },
+      })
+      .limit(4)
+      .select("-photos.Key -photos.key -photos.ETag -photos.Bucket -googleMap");
   } catch (err) {
     console.log(err);
   }
