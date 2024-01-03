@@ -2,10 +2,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import ImageGallary from "../components/misc/ImageGallary";
-import Calgary from "../assets/Calgary.jpg"
-
-
-
+import Calgary from "../assets/Calgary.jpg";
 
 export default function AdView() {
   //The state
@@ -14,7 +11,6 @@ export default function AdView() {
   const [related, setRelated] = useState([]);
 
   // for modal of image
-  
 
   //Hooks
 
@@ -33,7 +29,6 @@ export default function AdView() {
       console.log(err);
     }
   };
-
 
   const generatePhotoArea = () => {
     if (ad.photos?.length > 0) {
@@ -58,11 +53,27 @@ export default function AdView() {
       ];
     }
   };
-  
 
   return (
     <>
-      <ImageGallary photos={generatePhotoArea(ad?.photos)}/>
+      <div className="container-fluid">
+        <div className="row mt-2">
+          <div className="col-lg-4">
+            <button className="btn btn-primary disabled mt-5">
+              {" "}
+              {ad.type ? ad.type : ""} for {ad.action ? ad.action : ""}
+            </button>
+
+            <div className="mt-4">{ad?.sold ? "❌ Off Market " : " ✅ In Market"}</div>
+
+            <h1>{ad.address}</h1>
+          </div>
+          <div className="col-lg-8">
+            <ImageGallary photos={generatePhotoArea(ad?.photos)} />
+          </div>
+        </div>
+      </div>
+
       <pre>{JSON.stringify({ ad, related }, null, 4)}</pre>
     </>
   );
