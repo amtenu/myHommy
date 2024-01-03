@@ -3,6 +3,7 @@ import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import ImageGallary from "../components/misc/ImageGallary";
 import Calgary from "../assets/Calgary.jpg";
+import AdFeatures from "../components/cards/AdFeatures";
 
 export default function AdView() {
   //The state
@@ -64,9 +65,10 @@ export default function AdView() {
               {ad.type ? ad.type : ""} for {ad.action ? ad.action : ""}
             </button>
 
-            <div className="mt-4">{ad?.sold ? "❌ Off Market " : " ✅ In Market"}</div>
+            <div className="mt-4">{ad?.sold ? "❌  Off Market " : " ✅  In Market"}</div>
 
             <h1>{ad.address}</h1>
+            <AdFeatures ad={ad}/>
           </div>
           <div className="col-lg-8">
             <ImageGallary photos={generatePhotoArea(ad?.photos)} />

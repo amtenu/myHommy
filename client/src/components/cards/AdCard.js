@@ -1,17 +1,14 @@
-import { IoBedOutline } from "react-icons/io5";
-import { TbBath } from "react-icons/tb";
-import { BiArea } from "react-icons/bi";
 import { Badge } from "antd";
 import { Link } from "react-router-dom";
+import AdFeatures from "./AdFeatures";
 
 export default function AdCard({ ad }) {
   function format(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
   return (
-    
-      <div className="col-lg-4 p-4 gx-4 gy-4">
-        <Link to={`/ad/${ad.slug}`}>
+    <div className="col-lg-4 p-4 gx-4 gy-4">
+      <Link to={`/ad/${ad.slug}`}>
         <Badge.Ribbon
           text={`${ad?.type} for ${ad?.action}`}
           color={`${ad?.action === "Sell" ? "red" : "blue"}`}
@@ -27,33 +24,10 @@ export default function AdCard({ ad }) {
             <h3>CAD&nbsp;{format(ad?.price)}</h3>
             <p>{ad?.address}</p>
 
-            <p className="card-text d-flex justify-content-between">
-              {ad?.bedrooms ? (
-                <span>
-                  <IoBedOutline /> {ad?.bedrooms}
-                </span>
-              ) : (
-                ""
-              )}{" "}
-              {ad?.bathrooms ? (
-                <span>
-                  <TbBath /> {ad?.bathrooms}
-                </span>
-              ) : (
-                ""
-              )}{" "}
-              {ad?.landsize ? (
-                <span>
-                  <BiArea /> {ad?.landsize}
-                </span>
-              ) : (
-                ""
-              )}{" "}
-            </p>
+            <AdFeatures Ad={ad} />
           </div>
         </Badge.Ribbon>
-        </Link>
-      </div>
-   
+      </Link>
+    </div>
   );
 }
