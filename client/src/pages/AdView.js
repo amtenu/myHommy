@@ -1,21 +1,11 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
-import Gallery from "react-photo-gallery";
-import Carousel, { Modal, ModalGateway } from "react-images";
+import ImageGallary from "../components/misc/ImageGallary";
+import Calgary from "../assets/Calgary.jpg"
 
-const photos = [
-  {
-    src: "https://myhommy-bucket.s3.ca-central-1.amazonaws.com/dnlUeznBaQlHUr8OQkO7g.jpeg",
-    width: 4,
-    height: 3,
-  },
-  {
-    src: "https://myhommy-bucket.s3.ca-central-1.amazonaws.com/dnlUeznBaQlHUr8OQkO7g.jpeg",
-    width: 1,
-    height: 1,
-  },
-];
+
+
 
 export default function AdView() {
   //The state
@@ -24,8 +14,7 @@ export default function AdView() {
   const [related, setRelated] = useState([]);
 
   // for modal of image
-  const [current, setCurent] = useState(0);
-  const [isOpen, setIsOpen] = useState(false);
+  
 
   //Hooks
 
@@ -45,33 +34,35 @@ export default function AdView() {
     }
   };
 
-  const openLightBox = useCallback((event, { photo, index }) => {
-    setCurent(index);
-    setIsOpen(true);
-  }, []);
 
-  const closeLightBox = () => {
-    setCurent(0);
-    setIsOpen(false);
+  const generatePhotoArea = () => {
+    if (ad.photos?.length > 0) {
+      const x = ad.photos?.length === 1 ? 2 : 4;
+      let array = [];
+
+      ad.photos.map((photo) => {
+        array.push({
+          src: photo.Location,
+          width: x,
+          height: x,
+        });
+      });
+      return array;
+    } else {
+      return [
+        {
+          src: Calgary,
+          width: 2,
+          height: 1,
+        },
+      ];
+    }
   };
+  
 
   return (
     <>
-      <Gallery photos={photos} onClick={openLightBox} />
-      <ModalGateway>
-        {isOpen ? (
-          <Modal onClose={closeLightBox}>
-            <Carousel
-              currentIndex={current}
-              views={photos.map((x) => ({
-                ...x,
-                srcset: x.srcSet,
-                caption: x.title,
-              }))}
-            />
-          </Modal>
-        ) : null}
-      </ModalGateway>
+      <ImageGallary photos={generatePhotoArea(ad?.photos)}/>
       <pre>{JSON.stringify({ ad, related }, null, 4)}</pre>
     </>
   );
