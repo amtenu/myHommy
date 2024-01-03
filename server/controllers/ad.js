@@ -136,25 +136,30 @@ export const read = async (req, res) => {
   try {
     const ad = await Ad.findOne({ slug: req.params.slug }).populate(
       "postedBy",
-      "name username email phone compny photo.location"
+      "name username email phone company photo.Location"
     );
    
-    res.json({ ad });
+    if (!ad) {
+      return res.status(404).json({ message: "Ad not found" });
+    }
 
     //related data
 
-    const relatedData = await ad
+    const cityRegex = ad.googleMap?.city?.[0]?.city || '';
+
+    const related= await Ad
       .find({
         _id: { $ne: ad._id }, // Not include itself
         action: ad.action,
         type: ad.type,
         address: {
-          $regex: ad.googleMap.city[0].city,
-          $options: "i",
+          $regex: cityRegex,
+          $options: "i", //ignore cases
         },
       })
       .limit(4)
       .select("-photos.Key -photos.key -photos.ETag -photos.Bucket -googleMap");
+      res.json({ ad , related });
   } catch (err) {
     console.log(err);
   }

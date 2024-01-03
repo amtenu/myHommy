@@ -18,13 +18,16 @@ export default function AdView() {
   const fetchAd = async () => {
     try {
       const { data } = await axios.get(`/ad/${params.slug}`);
-      setAd(data?.ad)
-      setRelated(data?.related)
-
+      setAd(data?.ad);
+      setRelated(data?.related);
     } catch (err) {
       console.log(err);
     }
   };
 
-  return <><pre>{JSON.stringify({ad,related},null,4)}</pre></>;
+  return (
+    <>
+      <pre>{JSON.stringify({ ad, related }, null, 4)}</pre>
+    </>
+  );
 }
