@@ -9,4 +9,9 @@ const router=express.Router();
  router.get('/ads',ad.ads);
  router.get('/ad/:slug',ad.read)
 
+ //wishlists
+
+ router.post("/wishlist",requireSignin,ad.addToWishlist)
+ router.post("/wishlist/:adId",requireSignin,ad.removeFromWishlist)
+
  export default router

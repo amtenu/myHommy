@@ -138,29 +138,74 @@ export const read = async (req, res) => {
       "postedBy",
       "name username email phone company photo.Location"
     );
-   
+
     if (!ad) {
       return res.status(404).json({ message: "Ad not found" });
     }
 
     //related data
 
-    const cityRegex = ad.googleMap?.city?.[0]?.city || '';
+    const cityRegex = ad.googleMap?.city?.[0]?.city || "";
 
-    const related= await Ad
-      .find({
-        _id: { $ne: ad._id }, // Not include itself
-        action: ad.action,
-        type: ad.type,
-        address: {
-          $regex: cityRegex,
-          $options: "i", //ignore cases
-        },
-      })
+    const related = await Ad.find({
+      _id: { $ne: ad._id }, // Not include itself
+      action: ad.action,
+      type: ad.type,
+      address: {
+        $regex: cityRegex,
+        $options: "i", //ignore cases
+      },
+    })
       .limit(4)
       .select("-photos.Key -photos.key -photos.ETag -photos.Bucket -googleMap");
-      res.json({ ad , related });
+    res.json({ ad, related });
   } catch (err) {
     console.log(err);
   }
 };
+
+export const addToWishlist = async (req, res) => {
+  try {
+    const user = await User.findByIdAndUpdate(
+      req.user._id,
+      {
+        $addToSet: {
+          //void duplicate ids
+          wishlist: req.body.adId,
+        },
+      },
+      { new: true }
+    );
+
+  const {password,resetCode, ...rest}=user._doc //we dont want to send all info to frontend
+  res.send(user)
+
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+
+
+export const removeFromWishlist = async (req, res) => {
+  try {
+    const user = await User.findByIdAndUpdate(
+      req.user._id,
+      {
+        $pull: {
+          //void duplicate ids
+          wishlist: req.body.adId,
+        },
+      },
+      { new: true }
+    );
+
+  const {password,resetCode, ...rest}=user._doc //we dont want to send all info to frontend
+  res.send(user)
+
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+
