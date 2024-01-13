@@ -1,9 +1,10 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import ImageGallary from "../components/misc/ImageGallary";
 import Calgary from "../assets/Calgary.jpg";
 import AdFeatures from "../components/cards/AdFeatures";
+import {format} from "../helpers/ad"
 
 export default function AdView() {
   //The state
@@ -65,10 +66,11 @@ export default function AdView() {
               {ad.type ? ad.type : ""} for {ad.action ? ad.action : ""}
             </button>
 
-            <div className="mt-4">{ad?.sold ? "❌  Off Market " : " ✅  In Market"}</div>
+            <div className="mt-4">{ad?.sold ? "❌  Off market " : " ✅  In market"}</div>
 
             <h1>{ad.address}</h1>
             <AdFeatures ad={ad}/>
+            <h3 className="mt-4 h2">{format(ad.price)}</h3>
           </div>
           <div className="col-lg-8">
             <ImageGallary photos={generatePhotoArea(ad?.photos)} />
