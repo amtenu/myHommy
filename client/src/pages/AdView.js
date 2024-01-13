@@ -76,7 +76,7 @@ export default function AdView() {
             <h1>{ad.address}</h1>
             <AdFeatures ad={ad}/>
             <h3 className="mt-3 h2">CAD&nbsp;{format(ad.price)}</h3>
-            <p>{dayjs(ad?.createdAt).fromNow()}</p>
+            <p className="text-muted">{dayjs(ad?.createdAt).fromNow()}</p>
           </div>
           <div className="col-lg-8">
             <ImageGallary photos={generatePhotoArea(ad?.photos)} />
