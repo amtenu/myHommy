@@ -5,6 +5,11 @@ import ImageGallary from "../components/misc/ImageGallary";
 import Calgary from "../assets/Calgary.jpg";
 import AdFeatures from "../components/cards/AdFeatures";
 import {format} from "../helpers/ad"
+import dayjs from "dayjs"
+
+import relativeTime from "dayjs/plugin/relativeTime"
+
+dayjs.extend(relativeTime) //fromnow() 3 days ago etc 
 
 export default function AdView() {
   //The state
@@ -71,6 +76,7 @@ export default function AdView() {
             <h1>{ad.address}</h1>
             <AdFeatures ad={ad}/>
             <h3 className="mt-3 h2">CAD&nbsp;{format(ad.price)}</h3>
+            <p>{dayjs(ad?.createdAt).fromNow()}</p>
           </div>
           <div className="col-lg-8">
             <ImageGallary photos={generatePhotoArea(ad?.photos)} />

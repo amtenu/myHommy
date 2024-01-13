@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^13.5.0",
     "antd": "^5.12.2",
     "axios": "^1.6.2",
+    "dayjs": "^1.11.10",
     "eslint": "^8.55.0",
     "react": "^18.2.0",
     "react-currency-input-field": "^3.6.12",
