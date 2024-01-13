@@ -47,6 +47,7 @@ const schema = new Schema({
     type: Number,
     default: 0,
   },
-});
+  
+},{timestamps:true});
 
 export default model("ad", schema);
