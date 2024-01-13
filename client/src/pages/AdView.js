@@ -4,12 +4,13 @@ import axios from "axios";
 import ImageGallary from "../components/misc/ImageGallary";
 import Calgary from "../assets/Calgary.jpg";
 import AdFeatures from "../components/cards/AdFeatures";
-import {format} from "../helpers/ad"
-import dayjs from "dayjs"
+import { format } from "../helpers/ad";
+import dayjs from "dayjs";
+import Like from "../components/misc/Like";
 
-import relativeTime from "dayjs/plugin/relativeTime"
+import relativeTime from "dayjs/plugin/relativeTime";
 
-dayjs.extend(relativeTime) //fromnow() 3 days ago etc 
+dayjs.extend(relativeTime); //fromnow() 3 days ago etc
 
 export default function AdView() {
   //The state
@@ -66,15 +67,20 @@ export default function AdView() {
       <div className="container-fluid">
         <div className="row mt-2">
           <div className="col-lg-4">
-            <button className="btn btn-primary disabled mt-5">
-              {" "}
-              {ad.type ? ad.type : ""} for {ad.action ? ad.action : ""}
-            </button>
+            <div className="d-flex justify-content-between">
+              <button className="btn btn-primary disabled mt-5">
+                {" "}
+                {ad.type ? ad.type : ""} for {ad.action ? ad.action : ""}
+              </button>
+              <Like ad={ad}/>
+            </div>
 
-            <div className="mt-4">{ad?.sold ? "❌  Off market " : " ✅  In market"}</div>
+            <div className="mt-4">
+              {ad?.sold ? "❌  Off market " : " ✅  In market"}
+            </div>
 
             <h1>{ad.address}</h1>
-            <AdFeatures ad={ad}/>
+            <AdFeatures ad={ad} />
             <h3 className="mt-3 h2">CAD&nbsp;{format(ad.price)}</h3>
             <p className="text-muted">{dayjs(ad?.createdAt).fromNow()}</p>
           </div>
