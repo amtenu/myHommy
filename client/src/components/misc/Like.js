@@ -1,7 +1,7 @@
 import { useAuth } from "../../context/auth";
 import { FcLike } from "react-icons/fc";
 import { FcLikePlaceholder } from "react-icons/fc";
-import { useNavigate,useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
 
@@ -10,7 +10,7 @@ export default function Like({ ad }) {
 
   const navigate = useNavigate();
 
-  const location=useLocation()
+  const location = useLocation();
 
   const handleLike = async () => {
     try {
