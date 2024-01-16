@@ -194,7 +194,7 @@ export const removeFromWishlist = async (req, res) => {
       {
         $pull: {
           //void duplicate ids
-          wishlist: req.body.adId,
+          wishlist: req.params.adId,
         },
       },
       { new: true }
