@@ -7,6 +7,7 @@ import AdFeatures from "../components/cards/AdFeatures";
 import { format } from "../helpers/ad";
 import dayjs from "dayjs";
 import Like from "../components/misc/Like";
+import Map from "../components/cards/Map";
 
 import relativeTime from "dayjs/plugin/relativeTime";
 
@@ -72,7 +73,7 @@ export default function AdView() {
                 {" "}
                 {ad.type ? ad.type : ""} for {ad.action ? ad.action : ""}
               </button>
-              <Like ad={ad}/>
+              <Like ad={ad} />
             </div>
 
             <div className="mt-4">
@@ -89,8 +90,13 @@ export default function AdView() {
           </div>
         </div>
       </div>
-
-      <pre>{JSON.stringify({ ad, related }, null, 4)}</pre>
+      <div className="container">
+        <div className="row">
+          <div className="col-lg-8 offset-lg-2">
+            <Map ad={ad} />
+          </div>
+        </div>
+      </div>
     </>
   );
 }
