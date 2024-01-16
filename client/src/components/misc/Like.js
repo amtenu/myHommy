@@ -1,19 +1,23 @@
 import { useAuth } from "../../context/auth";
 import { FcLike } from "react-icons/fc";
 import { FcLikePlaceholder } from "react-icons/fc";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useLocation } from "react-router-dom";
 import axios from "axios";
-import toast from 'react-hot-toast'
+import toast from "react-hot-toast";
 
 export default function Like({ ad }) {
   const [auth, setAuth] = useAuth();
 
   const navigate = useNavigate();
 
+  const location=useLocation()
+
   const handleLike = async () => {
     try {
       if (auth.user === null) {
-        navigate("/login");
+        navigate("/login", {
+          state: `/ad/${ad.slug}`,
+        });
         return;
       }
       const { data } = await axios.post("/wishlist", { adId: ad._id });
@@ -21,7 +25,7 @@ export default function Like({ ad }) {
       const fromLs = JSON.parse(localStorage.getItem("auth"));
       fromLs.user = data;
       localStorage.setItem("auth", JSON.stringify(fromLs));
-      toast.success('Property added to list')
+      toast.success("Property added to list");
     } catch (err) {
       console.log(err);
     }
@@ -30,7 +34,9 @@ export default function Like({ ad }) {
   const handleUnlike = async () => {
     try {
       if (auth.user === null) {
-        navigate("/login");
+        navigate("/login", {
+          state: `/ad/${ad.slug}`,
+        });
         return;
       }
       const { data } = await axios.delete(`/wishlist/${ad._id}`);
@@ -38,7 +44,7 @@ export default function Like({ ad }) {
       const fromLs = JSON.parse(localStorage.getItem("auth"));
       fromLs.user = data;
       localStorage.setItem("auth", JSON.stringify(fromLs));
-      toast.success('Property removed from list')
+      toast.success("Property removed from list");
     } catch (err) {
       console.log(err);
     }
@@ -52,10 +58,7 @@ export default function Like({ ad }) {
         </span>
       ) : (
         <span>
-          <FcLikePlaceholder
-            onClick={handleLike}
-            className="h2 mt-3 pointer"
-          />
+          <FcLikePlaceholder onClick={handleLike} className="h2 mt-3 pointer" />
         </span>
       )}
     </>
