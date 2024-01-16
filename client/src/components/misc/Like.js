@@ -3,6 +3,7 @@ import { FcLike } from "react-icons/fc";
 import { FcLikePlaceholder } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import toast from 'react-hot-toast'
 
 export default function Like({ ad }) {
   const [auth, setAuth] = useAuth();
@@ -17,9 +18,10 @@ export default function Like({ ad }) {
       }
       const { data } = await axios.post("/wishlist", { adId: ad._id });
       setAuth({ ...auth, user: data });
-      const fromLs = JSON.stringify(localStorage.getItem("auth"));
+      const fromLs = JSON.parse(localStorage.getItem("auth"));
       fromLs.user = data;
       localStorage.setItem("auth", JSON.stringify(fromLs));
+      toast.success('Property added to list')
     } catch (err) {
       console.log(err);
     }
@@ -27,6 +29,16 @@ export default function Like({ ad }) {
 
   const handleUnlike = async () => {
     try {
+      if (auth.user === null) {
+        navigate("/login");
+        return;
+      }
+      const { data } = await axios.delete(`/wishlist/${ad._id}`);
+      setAuth({ ...auth, user: data });
+      const fromLs = JSON.parse(localStorage.getItem("auth"));
+      fromLs.user = data;
+      localStorage.setItem("auth", JSON.stringify(fromLs));
+      toast.success('Property removed from list')
     } catch (err) {
       console.log(err);
     }
@@ -36,12 +48,12 @@ export default function Like({ ad }) {
     <>
       {auth.user?.wishlist?.includes(ad?._id) ? (
         <span>
-          <FcLike onClick={handleLike} className="h2 mt-3 pointer" />
+          <FcLike onClick={handleUnlike} className="h2 mt-3 pointer" />
         </span>
       ) : (
         <span>
           <FcLikePlaceholder
-            onClick={handleUnlike}
+            onClick={handleLike}
             className="h2 mt-3 pointer"
           />
         </span>
