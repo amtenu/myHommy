@@ -12,6 +12,6 @@ const router=express.Router();
  //wishlists
 
  router.post("/wishlist",requireSignin,ad.addToWishlist)
- router.post("/wishlist/:adId",requireSignin,ad.removeFromWishlist)
+ router.delete("/wishlist/:adId",requireSignin,ad.removeFromWishlist)
 
  export default router
