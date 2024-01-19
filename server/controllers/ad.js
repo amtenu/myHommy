@@ -86,7 +86,7 @@ export const create = async (req, res) => {
       postedBy: req.body._id,
       location: {
         type: "Point",
-        coordinate: [geo?.[0]?.longitude, geo?.[0].latitude],
+        coordinates: [geo?.[0]?.longitude, geo?.[0].latitude],
       },
       googleMap: geo,
       slug: slugify(`${type}-${address}-${price}-${nanoid(6)}`), //unique slug
