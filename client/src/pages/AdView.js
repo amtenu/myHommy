@@ -94,6 +94,15 @@ export default function AdView() {
         <div className="row">
           <div className="col-lg-8 offset-lg-2 mt-3">
             <Map ad={ad} />
+            <br/>
+            <h1>
+              {ad?.type} in {ad?.address} for CAD {ad?.price}
+              <AdFeatures ad={ad} />
+              <hr/>
+              <h3 className="f2-bold">{ad?.title}</h3>
+              <p className="lead">{ad?.description?.replaceAll(".","<br/><br/>")}</p>
+
+            </h1>
           </div>
         </div>
       </div>
