@@ -57,7 +57,7 @@ export default function AdForm({ action, type }) {
             defaultInputValue: ad?.address,
             placeholder: "Search for address ...",
             onChange: ({ value }) =>
-              setAd({ ...ad, address: value.description }),
+              setAd({ ...ad, address:value.description }),
           }}
         />
       </div>
