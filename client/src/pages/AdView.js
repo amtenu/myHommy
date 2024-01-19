@@ -90,9 +90,9 @@ export default function AdView() {
           </div>
         </div>
       </div>
-      <div className="container">
+      <div className="container mb-5">
         <div className="row">
-          <div className="col-lg-8 offset-lg-2">
+          <div className="col-lg-8 offset-lg-2 mt-3">
             <Map ad={ad} />
           </div>
         </div>
