@@ -8,6 +8,7 @@ import { format } from "../helpers/ad";
 import dayjs from "dayjs";
 import Like from "../components/misc/Like";
 import Map from "../components/cards/Map";
+import HTMLRenderer from "react-html-renderer";
 
 import relativeTime from "dayjs/plugin/relativeTime";
 
@@ -94,14 +95,16 @@ export default function AdView() {
         <div className="row">
           <div className="col-lg-8 offset-lg-2 mt-3">
             <Map ad={ad} />
-            <br/>
+            <br />
             <h1>
               {ad?.type} in {ad?.address} for CAD {ad?.price}
               <AdFeatures ad={ad} />
-              <hr/>
+              <hr />
               <h3 className="f2-bold">{ad?.title}</h3>
-              <p className="lead">{ad?.description?.replaceAll(".","<br/><br/>")}</p>
-
+              
+              <HTMLRenderer
+                html={ad?.description?.replaceAll(".", "<br/><br/>")}
+              />
             </h1>
           </div>
         </div>
