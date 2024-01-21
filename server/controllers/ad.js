@@ -145,7 +145,7 @@ export const read = async (req, res) => {
 
     //related data
 
-    const cityRegex = ad.googleMap?.city?.[0]?.city || "";
+    const cityRegex = ad.googleMap[0]?.administrativeLeveles?.level2long || ''
 
     const related = await Ad.find({
       _id: { $ne: ad._id }, // Not include itself
