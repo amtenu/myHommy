@@ -44,7 +44,6 @@ export default function Profile() {
   const handlesubmit = async (e) => {
     e.preventDefault();
     try {
-      //   console.log({username,phone,photo,address});
       setLoading(true);
       const { data } = await axios.put("/update-profile", {
         username,
@@ -56,17 +55,16 @@ export default function Profile() {
         about,
         photo,
       });
-      if(data?.error){
-        toast.error(data.error)
+      if (data?.error) {
+        toast.error(data.error);
       } else {
-        console.log("updated data ==> ",data)
-        setAuth({...auth,user:data})
+        setAuth({ ...auth, user: data });
 
-        let fromLS =JSON.parse(localStorage.getItem('auth'));
-        fromLS.user=data
-        localStorage.setItem('auth',JSON.stringify(fromLS))
+        let fromLS = JSON.parse(localStorage.getItem("auth"));
+        fromLS.user = data;
+        localStorage.setItem("auth", JSON.stringify(fromLS));
         setLoading(false);
-        toast.success("Profile updated")
+        toast.success("Profile updated");
       }
     } catch (err) {
       console.log(err);
@@ -78,9 +76,6 @@ export default function Profile() {
       <h1 className="display-1 bg-primary text-light p-5">Profile</h1>
       <div className="container-fluid">
         <Sidebar />
-        {/* <div className="container mt-2"><pre>
-           {JSON.stringify({username})}
-            </pre></div> */}
 
         <div className="container mt-2">
           <div className="row">
@@ -137,7 +132,7 @@ export default function Profile() {
                   onChange={(e) => setPhone(e.target.value)}
                 />
                 <textarea
-                  placeholder="Enter your about information"
+                  placeholder="Enter any interesting information about yourself"
                   className="form-control mb-4"
                   value={about}
                   onChange={(e) => {
