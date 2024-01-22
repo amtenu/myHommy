@@ -4,6 +4,7 @@ import User from "../models/user.js";
 import slugify from "slugify";
 import Ad from "../models/ad.js";
 import ad from "../models/ad.js";
+import { emailTemplate } from "../helpers/email.js";
 
 export const uploadImage = async (req, res) => {
   try {
@@ -92,8 +93,6 @@ export const create = async (req, res) => {
       slug: slugify(`${type}-${address}-${price}-${nanoid(6)}`), //unique slug
     }).save();
 
-  
-
     // user role is seller now since defaut is buyer
 
     const user = await User.findByIdAndUpdate(
@@ -145,7 +144,7 @@ export const read = async (req, res) => {
 
     //related data
 
-    const cityRegex = ad.googleMap[0]?.administrativeLeveles?.level2long || ''
+    const cityRegex = ad.googleMap[0]?.administrativeLeveles?.level2long || "";
 
     const related = await Ad.find({
       _id: { $ne: ad._id }, // Not include itself
@@ -177,15 +176,12 @@ export const addToWishlist = async (req, res) => {
       { new: true }
     );
 
-  const {password,resetCode, ...rest}=user._doc //we dont want to send all info to frontend
-  res.send(user)
-
+    const { password, resetCode, ...rest } = user._doc; //we dont want to send all info to frontend
+    res.send(user);
   } catch (err) {
     console.log(err);
   }
 };
-
-
 
 export const removeFromWishlist = async (req, res) => {
   try {
@@ -200,12 +196,55 @@ export const removeFromWishlist = async (req, res) => {
       { new: true }
     );
 
-  const {password,resetCode, ...rest}=user._doc //we dont want to send all info to frontend
-  res.send(user)
-
+    const { password, resetCode, ...rest } = user._doc; //we dont want to send all info to frontend
+    res.send(user);
   } catch (err) {
     console.log(err);
   }
 };
 
+//contact
 
+export const contactSeller = async (req, res) => {
+  try {
+    const { name, email, message, phone, adId } = req.body;
+    const ad = await Ad.findById(adId).populate("postedBy", "email");
+
+    const user = await Ad.findByIdAndUpdate(req.user._id, {
+      $addToSet: { enquiredProperties: adId }, //must be a unique property set
+    });
+
+    if (!user) {
+      return res.json({ error: "Couldn't find user with that email" });
+    } else {
+      config.AWSSES.sendEmail(
+        emailTemplate(
+          ad.postedBy.email`
+        <p>Recived a new customer enquiry</p>
+        <h4>Details </h4>
+        <p> Name : ${name}</p>
+        <p> email : ${email}</p>
+        <p> phone : ${phone}</p>
+        <p> message : ${message}</p>
+        <p> Time : &copy;${new Date().getFullYear()}</p>
+
+        <a href="${config.CLIENT_URL}/ad/${ad.slug}"> ${ad.type} in ${ad.address} for ${ad.action} for ${ad.price} </a>
+        `,
+          email,
+          "New enquiry received "
+        ),
+        (err, data) => {
+          if (err) {
+            console.log(err);
+            return res.json({ ok: false });
+          } else {
+            console.log(data);
+            return res.json({ ok: true });
+          }
+        }
+      );
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
