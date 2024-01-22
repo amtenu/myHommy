@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../../context/auth";
 import { Link, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import axios from "axios";
+
 export default function ContactSeller({ ad }) {
   //context
 
@@ -18,11 +21,42 @@ export default function ContactSeller({ ad }) {
 
   const navigate = useNavigate();
 
-   const LoggedIn=auth.user !==null &&auth.token !==""
+  const LoggedIn = auth.user !== null && auth.token !== "";
 
+  useEffect(() => {
+    if (auth?.user) {
+      setName(auth.user?.name);
+      setEmail(auth.user?.email);
+      setPhone(auth.user?.phone);
+    }
+  }, [LoggedIn]);
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true)
+    try {
+      const { data } = await axios.post("/contact-seller", {
+        name,
+        email,
+        message,
+        phone,
+        adId: ad._id,
+      });
 
-  console.log(ad);
+      if (data?.error) {
+        toast.error(data.error);
+        setLoading(false)
+      } else {
+        toast.success("Your enquiry has been sent to seller")
+      
+      }
+    } catch (err) {
+      console.log(err);
+      toast.error("Something went wrong.Try again!!");
+      setLoading(false)
+    }
+  };
+
   return (
     <>
       <div className="row">
@@ -31,7 +65,7 @@ export default function ContactSeller({ ad }) {
             Contact{" "}
             {ad?.postedBy?.name ? ad?.postedBy?.name : ad?.postedBy?.username}
           </h3>
-          <form>
+          <form onSubmit={handleSubmit}>
             <textarea
               name="message"
               placeholder="Please write your message here"
@@ -52,19 +86,17 @@ export default function ContactSeller({ ad }) {
             ></input>
             <input
               type="text"
-               
               className="form-control mb-3"
               placeholder="Please enter your email"
               value={email}
-              onChange={(e)=>e.target.value}
+              onChange={(e) => e.target.value}
               disabled={!LoggedIn}
-              
             ></input>
             <input
               type="text"
               className="form-control mb-3"
               placeholder="Please enter your phone no."
-              value={name}
+              value={phone}
               onChange={(e) => setPhone(e.target.value)}
               disabled={!LoggedIn}
             ></input>
@@ -73,7 +105,11 @@ export default function ContactSeller({ ad }) {
               className="btn btn-primary mb-3 mt-3"
               disabled={!name || !email || loading}
             >
-              {LoggedIn ?loading ? "Please wait " : "Send enquiry" :"Login in to send enquiry"}
+              {LoggedIn
+                ? loading
+                  ? "Please wait "
+                  : "Send enquiry"
+                : "Login in to send enquiry"}
             </button>
           </form>
         </div>
