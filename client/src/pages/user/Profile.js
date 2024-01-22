@@ -44,7 +44,7 @@ export default function Profile() {
   const handlesubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log({username});
+      console.log({username,phone,photo,address});
     } catch (err) {
       console.log(err);
     }
@@ -98,8 +98,8 @@ export default function Profile() {
                   type="text"
                   placeholder="Enter your address"
                   className="form-control mb-4"
-                  value={company}
-                  onChange={(e) => setCompany(e.target.value)}
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
                 />
                 <input
                   type="text"
