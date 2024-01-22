@@ -19,6 +19,7 @@ import RentLand from "./pages/user/ad/RentLand";
 import SellHouse from "./pages/user/ad/SellHouse";
 import SellLand from "./pages/user/ad/SellLand";
 import AdView from "./pages/AdView";
+import Footer from "./components/nav/Footer";
 
 function App() {
   return (
@@ -52,6 +53,7 @@ function App() {
           </Route>
           <Route path="/ad/:slug" element ={<AdView/>} />
         </Routes>
+        <Footer/>
       </AuthProvider>
     </BrowserRouter>
   );
