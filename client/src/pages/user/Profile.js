@@ -5,6 +5,8 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import slugify from "slugify";
 import Sidebar from "../../components/nav/Sidebar";
+
+import ProfilePhotoUpload from "../../components/form/ProfilePhotoUpload";
 export default function Profile() {
   //context
   const [auth, setAuth] = useAuth();
@@ -20,7 +22,7 @@ export default function Profile() {
   const [about, setAbout] = useState("");
   const [loading, setLoading] = useState(false);
   const [photo, setPhoto] = useState(null);
-  const [uploading, setuUploading] = useState(false);
+  const [uploading, setUploading] = useState(false);
 
   // hooks
 
@@ -60,6 +62,7 @@ export default function Profile() {
         <div className="container mt-2">
           <div className="row">
             <div className="col-lg-8 offset-lg-2 mt-2">
+                <ProfilePhotoUpload photo={photo} setPhoto={setPhoto} uploading={uploading} setUploading={setUploading} />
               <form onSubmit={handlesubmit}>
                 <input
                   type="text"
