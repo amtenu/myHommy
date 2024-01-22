@@ -10,6 +10,7 @@ import Like from "../components/misc/Like";
 import Map from "../components/cards/Map";
 import HTMLRenderer from "react-html-renderer";
 import AdCard from "../components/cards/AdCard";
+import ContactSeller from "../components/form/ContactSeller";
 
 import relativeTime from "dayjs/plugin/relativeTime";
 
@@ -110,6 +111,10 @@ export default function AdView() {
           </div>
         </div>
       </div>
+      <div className="container">
+        <ContactSeller ad={ad} />
+      </div>
+
       <div className="contaner-fluid">
         <h4 className="text-center mb-2">Related properties</h4>
         <hr style={{ width: "33%" }} />
