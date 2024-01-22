@@ -47,7 +47,9 @@ export default function ContactSeller({ ad }) {
         toast.error(data.error);
         setLoading(false)
       } else {
+        setLoading(false)
         toast.success("Your enquiry has been sent to seller")
+        setMessage('')
       
       }
     } catch (err) {
