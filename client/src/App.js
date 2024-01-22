@@ -21,6 +21,8 @@ import SellLand from "./pages/user/ad/SellLand";
 import AdView from "./pages/AdView";
 import Footer from "./components/nav/Footer";
 
+import Profile from "./pages/user/Profile";
+
 function App() {
   return (
     <BrowserRouter>
@@ -50,10 +52,11 @@ function App() {
             <Route path="ad/create/rent/Land" element={<RentLand />} />
             <Route path="ad/create/sell/House" element={<SellHouse />} />
             <Route path="ad/create/sell/Land" element={<SellLand />} />
+            <Route path='user/profile' element={<Profile/>}></Route>
           </Route>
-          <Route path="/ad/:slug" element ={<AdView/>} />
+          <Route path="/ad/:slug" element={<AdView />} />
         </Routes>
-        <Footer/>
+        <Footer />
       </AuthProvider>
     </BrowserRouter>
   );

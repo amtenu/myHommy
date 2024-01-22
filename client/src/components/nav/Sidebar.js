@@ -13,6 +13,11 @@ export default function Sidebar() {
             Create Ad
           </NavLink>
         </li>
+        <li>
+          <NavLink className="nav-link" to="/user/profile">
+            Profile
+          </NavLink>
+        </li>
       </ul>
     </>
   );
