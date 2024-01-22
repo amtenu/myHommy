@@ -83,16 +83,16 @@ export const create = async (req, res) => {
 
     const ad = await new Ad({
       ...req.body,
-      postedBy: req.body._id,
+      postedBy: req.user._id,
       location: {
         type: "Point",
         coordinates: [geo?.[0]?.longitude, geo?.[0].latitude],
       },
       googleMap: geo,
       slug: slugify(`${type}-${address}-${price}-${nanoid(6)}`), //unique slug
-    });
+    }).save();
 
-    ad.save();
+  
 
     // user role is seller now since defaut is buyer
 
