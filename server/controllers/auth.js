@@ -109,6 +109,9 @@ export const login = async (req, res) => {
     const user = await User.findOne({
       email,
     });
+    if (!user) {
+      return res.json({ error: "No User found.Please register." });
+    }
 
     const match = await comparePassword(password, user.password);
     if (!match) {
@@ -288,11 +291,11 @@ export const updateProfile = async (req, res) => {
     });
     user.password = undefined;
     user.resetCode = undefined;
-    res.json(user)
+    res.json(user);
   } catch (err) {
     console.log(err);
-    if(err.codeName==='DuplicateKey'){
-      return res.json({error:"Username or email is already taken"})
+    if (err.codeName === "DuplicateKey") {
+      return res.json({ error: "Username or email is already taken" });
     }
     return res.status(403).json({ error: "Unauthorized" });
   }
