@@ -44,7 +44,30 @@ export default function Profile() {
   const handlesubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log({username,phone,photo,address});
+      //   console.log({username,phone,photo,address});
+      setLoading(true);
+      const { data } = await axios.put("/update-profile", {
+        username,
+        name,
+        email,
+        company,
+        address,
+        phone,
+        about,
+        photo,
+      });
+      if(data?.error){
+        toast.error(data.error)
+      } else {
+        console.log("updated data ==> ",data)
+        setAuth({...auth,user:data})
+
+        let fromLS =JSON.parse(localStorage.getItem('auth'));
+        fromLS.user=data
+        localStorage.setItem('auth',JSON.stringify(fromLS))
+        setLoading(false);
+        toast.success("Profile updated")
+      }
     } catch (err) {
       console.log(err);
     }
@@ -62,7 +85,12 @@ export default function Profile() {
         <div className="container mt-2">
           <div className="row">
             <div className="col-lg-8 offset-lg-2 mt-2">
-                <ProfilePhotoUpload photo={photo} setPhoto={setPhoto} uploading={uploading} setUploading={setUploading} />
+              <ProfilePhotoUpload
+                photo={photo}
+                setPhoto={setPhoto}
+                uploading={uploading}
+                setUploading={setUploading}
+              />
               <form onSubmit={handlesubmit}>
                 <input
                   type="text"
@@ -93,7 +121,7 @@ export default function Profile() {
                   value={company}
                   onChange={(e) => setCompany(e.target.value)}
                 />
-               
+
                 <input
                   type="text"
                   placeholder="Enter your address"
@@ -108,16 +136,21 @@ export default function Profile() {
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                 />
-                <textarea placeholder="Enter your about information"
-                className="form-control mb-4"
-                value={about}
-                onChange={(e)=>{
-                    setAbout(e.target.value)
-                }}
-                maxLength={200}/>
-                <button className="btn btn-primary col-12 mb-4 mt-2" disabled={loading}>{
-                    loading? "Processing" :"Update Profile"
-}</button>
+                <textarea
+                  placeholder="Enter your about information"
+                  className="form-control mb-4"
+                  value={about}
+                  onChange={(e) => {
+                    setAbout(e.target.value);
+                  }}
+                  maxLength={200}
+                />
+                <button
+                  className="btn btn-primary col-12 mb-4 mt-2"
+                  disabled={loading}
+                >
+                  {loading ? "Processing" : "Update Profile"}
+                </button>
               </form>
             </div>
           </div>
