@@ -18,6 +18,11 @@ export default function Sidebar() {
             Profile
           </NavLink>
         </li>
+        <li>
+          <NavLink className="nav-link" to="/user/settings">
+           Settings
+          </NavLink>
+        </li>
       </ul>
     </>
   );

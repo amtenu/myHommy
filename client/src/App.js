@@ -22,6 +22,7 @@ import AdView from "./pages/AdView";
 import Footer from "./components/nav/Footer";
 
 import Profile from "./pages/user/Profile";
+import Settings from "./pages/user/Settings";
 
 function App() {
   return (
@@ -52,7 +53,8 @@ function App() {
             <Route path="ad/create/rent/Land" element={<RentLand />} />
             <Route path="ad/create/sell/House" element={<SellHouse />} />
             <Route path="ad/create/sell/Land" element={<SellLand />} />
-            <Route path='user/profile' element={<Profile/>}></Route>
+            <Route path="user/profile" element={<Profile />}></Route>
+            <Route path="user/settings" element={<Settings />} />
           </Route>
           <Route path="/ad/:slug" element={<AdView />} />
         </Routes>
