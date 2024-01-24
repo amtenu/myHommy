@@ -254,11 +254,11 @@ export const contactSeller = async (req, res) => {
 export const userAds = async (req, res) => {
   try {
     const perPage = 3;
-    const page = req.params.page ? eq.params.page : 1;
-    const total = await Ad.find({ postedBy: req.user._id });
+    const page = req.params.page ? req.params.page : 1;
+    const total = await Ad.find({ postedBy: req.user._id });//All the posts by logged in user to get total
 
-    const ads = await Ad.find({ postedBy: req.user._id })
-      .select("-photos.key -photos.Key -photos.Bucket -photos.ETag ")
+    const ads = await Ad.find({ postedBy: req.user._id })  //Supports load more feature
+      .select("-photos.key -photos.Key -photos.Bucket -photos.ETag  -location -googleMap ") //deselect to reduce traffic we dont need
       .populate("postedBy", "name email username phone company")
       .skip((page - 1) * perPage)
       .limit(perPage)
