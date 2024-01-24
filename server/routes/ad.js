@@ -18,4 +18,8 @@ const router=express.Router();
 
  router.post("/contact-seller",requireSignin,ad.contactSeller)
 
+ //queries
+
+ router.get("/user-ads",requireSignin,ad.userAds)
+
  export default router

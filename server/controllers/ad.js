@@ -228,7 +228,9 @@ export const contactSeller = async (req, res) => {
         <p> message : ${message}</p>
         <p> Time : &copy;${new Date().getFullYear()}</p>
 
-        <a href="${config.CLIENT_URL}/ad/${ad.slug}"> ${ad.type} in ${ad.address} for ${ad.action} for ${ad.price} </a>
+        <a href="${config.CLIENT_URL}/ad/${ad.slug}"> ${ad.type} in ${
+            ad.address
+          } for ${ad.action} for ${ad.price} </a>
         `,
           email,
           "New enquiry received "
@@ -244,6 +246,25 @@ export const contactSeller = async (req, res) => {
         }
       );
     }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const userAds = async (req, res) => {
+  try {
+    const perPage = 3;
+    const page = req.params.page ? eq.params.page : 1;
+    const total = await Ad.find({ postedBy: req.user._id });
+
+    const ads = await Ad.find({ postedBy: req.user._id })
+      .select("-photos.key -photos.Key -photos.Bucket -photos.ETag ")
+      .populate("postedBy", "name email username phone company")
+      .skip((page - 1) * perPage)
+      .limit(perPage)
+      .sort({ createdAt: -1 });
+
+      res.json({ads,total:total.length})
   } catch (err) {
     console.log(err);
   }
