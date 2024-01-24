@@ -264,7 +264,7 @@ export const userAds = async (req, res) => {
       .limit(perPage)
       .sort({ createdAt: -1 });
 
-      res.json({ads,total:total.length})
+      res.json({ads,total:total.length}) 
   } catch (err) {
     console.log(err);
   }
