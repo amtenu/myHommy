@@ -6,6 +6,7 @@ import ImageUpload from "../../../components/form/ImageUpload";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
+import Sidebar from "../../../components/nav/Sidebar";
 
 export default function EditAd({ action, type }) {
   //state to hold all the privious data
@@ -52,6 +53,9 @@ export default function EditAd({ action, type }) {
   };
 
   return (
+    <div>
+        <h1 className="display-1 bg-primary text-light p-5">  Edit Ad</h1>
+        <Sidebar/>
     <div className="container">
       <div className="form-control mb-3">
         <ImageUpload ad={ad} setAd={setAd} />
@@ -167,6 +171,7 @@ export default function EditAd({ action, type }) {
       </button>
 
       {/*<pre>{JSON.stringify(ad, null, 4)}</pre>*/}
+    </div>
     </div>
   );
 }
