@@ -20,6 +20,6 @@ const router=express.Router();
 
  //queries
 
- router.get("/user-ads/page",requireSignin,ad.userAds)
+ router.get("/user-ads/:page",requireSignin,ad.userAds)
 
  export default router
