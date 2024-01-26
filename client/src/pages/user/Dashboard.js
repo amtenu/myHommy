@@ -76,7 +76,7 @@ export default function Home({ ad }) {
               </div>
               <div className="row ">
                 {ads?.map((ad) => (
-                  <AdUser ad={ad} />
+                  <AdUser ad={ad} key={ad._id} />
                 ))}
               </div>
             </div>
