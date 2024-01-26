@@ -51,7 +51,7 @@ export default function Home({ad}) {
               <div className="col-lg-8 offset-lg-2 mt-4 mb-4">
                 <p className="text-center">Total {total} properties found.</p>
               </div>
-              <div className="row">
+              <div className="row ">
                 {ads?.map((ad) => (
                   <AdUser ad={ad} />
                 ))}
