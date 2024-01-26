@@ -253,7 +253,7 @@ export const contactSeller = async (req, res) => {
 
 export const userAds = async (req, res) => {
   try {
-    const perPage = 3;
+    const perPage = 2;
     const page = req.params.page ? req.params.page : 1;
     const total = await Ad.find({ postedBy: req.user._id });//All the posts by logged in user to get total
 
