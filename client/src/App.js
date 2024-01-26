@@ -13,6 +13,7 @@ import AccessAccount from "./pages/auth/AccessAccount";
 import Dashboard from "./pages/user/Dashboard";
 import PrivateRoute from "./components/routes/PrivateRoute";
 import AdCreate from "./pages/user/ad/AdCreate";
+import EditAd from "./pages/user/ad/EditAd";
 
 import RentHouse from "./pages/user/ad/RentHouse";
 import RentLand from "./pages/user/ad/RentLand";
@@ -23,6 +24,8 @@ import Footer from "./components/nav/Footer";
 
 import Profile from "./pages/user/Profile";
 import Settings from "./pages/user/Settings";
+
+
 
 function App() {
   return (
@@ -55,6 +58,7 @@ function App() {
             <Route path="ad/create/sell/Land" element={<SellLand />} />
             <Route path="user/profile" element={<Profile />}></Route>
             <Route path="user/settings" element={<Settings />} />
+            <Route path='user/ad/:slug' element={<EditAd/>} />
           </Route>
           <Route path="/ad/:slug" element={<AdView />} />
         </Routes>
