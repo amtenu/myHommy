@@ -1,8 +1,30 @@
 import Sidebar from "../../components/nav/Sidebar";
 import { useAuth } from "../../context/auth";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 export default function Home() {
   const [auth, setAuth] = useAuth();
+
+  //state
+
+  const [ads, setAds] = useState();
+  const [total,setTotal]=useState()
+
+  useEffect(() => {
+    fetchAds();
+  }, [auth.token !== ""]);
+
+  const fetchAds = async () => {
+    try {
+      const { data } = await axios.get("/user-ads");
+      setAds(data.ads)
+      setTotal(data.total)
+
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const seller = auth.user?.role?.includes("Seller");
   return (
@@ -26,11 +48,10 @@ export default function Home() {
         <>
           <div className="container">
             <div className="row">
-              <div>
-                <>
-                  <h2>List of advertisments</h2>
-                  <hr />
-                </>
+              <div className="col-lg-8 offset-lg-2 mt-4 mb-4">
+             
+                Total {total} properties found. 
+   
               </div>
             </div>
           </div>
