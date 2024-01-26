@@ -24,7 +24,7 @@ export default function AdUser({ ad }) {
             <h3>CAD&nbsp;{format(ad?.price)}</h3>
             <p>{ad?.address}</p>
 
-            <AdFeatures Ad={ad} />
+            <AdFeatures ad={ad} />
           </div>
         </Badge.Ribbon>
       </Link>
