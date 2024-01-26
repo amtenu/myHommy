@@ -18,7 +18,7 @@ export default function EditAd({ action, type }) {
     address: "",
     bedrooms: "",
     bathrooms: "",
-    carPark: "",
+    carpark: "",
     landsize: "",
     basement: false,
     garage: false,
@@ -108,7 +108,7 @@ export default function EditAd({ action, type }) {
             ""
           )}
         </div>
-        {type === "House" ? (
+        {ad.type === "House" ? (
           <>
             {" "}
             <input
@@ -142,11 +142,11 @@ export default function EditAd({ action, type }) {
               min="0"
               className="form-control mb-3"
               placeholder="How many carparks?"
-              value={ad.carPark}
+              value={ad.carpark}
               onChange={(e) =>
                 setAd({
                   ...ad,
-                  carPark: e.target.value,
+                  carpark: e.target.value,
                 })
               }
             />
