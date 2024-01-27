@@ -74,7 +74,7 @@ export default function ContactSeller({ ad }) {
               className="form-control"
               value={message}
               autoFocus={true}
-              onChange={(e) => e.target.value}
+              onChange={(e) => setMessage(e.target.value)}
               disabled={!LoggedIn}
             ></textarea>
 
