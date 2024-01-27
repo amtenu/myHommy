@@ -312,3 +312,25 @@ export const updateAd = async (req, res) => {
     console.log(err);
   }
 };
+
+export const enquiriedProperties = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id);
+    const ads = await Ad.find({ _id: user.enquiredProperties });
+    res.json(ads);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const wishListed = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id);
+    const ads = await Ad.find({ _id: user.wishlist });
+    res.json(ads);
+    console.log(ads)
+  } catch (err) {
+    console.log(err);
+  }
+};
+

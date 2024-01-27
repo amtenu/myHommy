@@ -21,6 +21,8 @@ const router=express.Router();
  //queries
 
  router.get("/user-ads/:page",requireSignin,ad.userAds)
+ router.get('/enquiried-properties',requireSignin,ad.enquiriedProperties)
+ router.get('/wishListed',requireSignin,ad.wishListed)
 
  //edit
 
