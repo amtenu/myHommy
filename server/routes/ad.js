@@ -28,4 +28,8 @@ const router=express.Router();
 
  router.put("/ad/:_id",requireSignin,ad.updateAd)
 
+ //delete ad
+
+ router.delete("/ad/:_id",requireSignin,ad.remove)
+
  export default router

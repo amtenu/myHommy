@@ -8,7 +8,6 @@ import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 import Sidebar from "../../../components/nav/Sidebar";
 
-
 export default function EditAd({ action, type }) {
   //state to hold all the privious data
   const [ad, setAd] = useState({
@@ -30,7 +29,7 @@ export default function EditAd({ action, type }) {
     action,
   });
 
-  const [loaded ,setLoaded]=useState(false)
+  const [loaded, setLoaded] = useState(false);
 
   //hooks
 
@@ -79,13 +78,33 @@ export default function EditAd({ action, type }) {
     }
   };
 
+  const handleDelete = async () => {
+    try {
+      setAd({ ...ad, loading: true });
+      const { data } = await axios.delete(`/ad/${ad._id}`);
+      console.log("Show single page data =>", data);
+
+      if (data?.error) {
+        toast.error(data.error);
+        setAd({ ...ad, loading: false });
+      } else {
+        toast.success("Advert deleted sucessfully");
+        setAd({ ...ad, loading: false });
+        navigate("/dashboard");
+      }
+    } catch (err) {
+      console.log(err);
+      setAd({ ...ad, loading: false });
+    }
+  };
+
   const fetchAds = async () => {
     try {
       const { data } = await axios.get(`/ad/${params.slug}`);
       //   console.log(data)//data consists of related data as well so need to remove related
 
       setAd(data?.ad);
-      setLoaded(true )
+      setLoaded(true);
     } catch (err) {
       console.log(err);
     }
@@ -98,7 +117,7 @@ export default function EditAd({ action, type }) {
       <div className="container">
         <div className="form-control mb-3">
           <ImageUpload ad={ad} setAd={setAd} />
-          {loaded? (
+          {loaded ? (
             <GooglePlacesAutocomplete
               apiKey={GOOGLE_PLACES_KEY}
               apiOptions="ca"
@@ -210,12 +229,21 @@ export default function EditAd({ action, type }) {
             })
           }
         />
-        <button
-          onClick={handleClick}
-          className={`btn btn-primary mb-5 ${ad.loading ? "disabled" : ""} `}
-        >
-          {ad.loading ? "Saving ...." : "Submit"}
-        </button>
+        <div className="d-flex justify-content-between">
+          <button
+            onClick={handleClick}
+            className={`btn btn-primary mb-5 ${ad.loading ? "disabled" : ""} `}
+          >
+            {ad.loading ? "Saving ...." : "Submit"}
+          </button>
+
+          <button
+            onClick={handleDelete}
+            className={`btn btn-danger mb-5 ${ad.loading ? "disabled" : ""} `}
+          >
+            {ad.loading ? "Deleting ...." : "Delete"}
+          </button>
+        </div>
 
         {/*<pre>{JSON.stringify(ad, null, 4)}</pre>*/}
       </div>
