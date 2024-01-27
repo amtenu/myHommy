@@ -24,6 +24,8 @@ import Footer from "./components/nav/Footer";
 
 import Profile from "./pages/user/Profile";
 import Settings from "./pages/user/Settings";
+import Wishlist from "./pages/user/Wishlist";
+import Enquiries from "./pages/user/Enquiries";
 
 
 
@@ -59,6 +61,8 @@ function App() {
             <Route path="user/profile" element={<Profile />}></Route>
             <Route path="user/settings" element={<Settings />} />
             <Route path='user/ad/:slug' element={<EditAd/>} />
+            <Route path="user/wishlist" element ={<Wishlist/>} />
+            <Route path="user/enquiries" element ={<Enquiries/>} />
           </Route>
           <Route path="/ad/:slug" element={<AdView />} />
         </Routes>

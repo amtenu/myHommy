@@ -9,8 +9,18 @@ export default function Sidebar() {
           </NavLink>
         </li>
         <li className="nav-item">
+          <NavLink className="nav-link" to="/user/wishlist">
+            Wishlist
+          </NavLink>
+        </li>
+        <li className="nav-item">
+          <NavLink className="nav-link" to="/user/enquiries">
+            Enquiries
+          </NavLink>
+        </li>
+        <li className="nav-item">
           <NavLink className="nav-link" to="/ad/create">
-            Create Ad
+            Create Advert
           </NavLink>
         </li>
         <li>
@@ -20,7 +30,7 @@ export default function Sidebar() {
         </li>
         <li>
           <NavLink className="nav-link" to="/user/settings">
-           Settings
+            Settings
           </NavLink>
         </li>
       </ul>
