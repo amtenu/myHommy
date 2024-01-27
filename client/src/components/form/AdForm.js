@@ -6,8 +6,14 @@ import ImageUpload from "./ImageUpload";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import {useAuth} from "../../context/auth"
 
 export default function AdForm({ action, type }) {
+     
+  //context
+
+  const [auth,setAuth]=useAuth();
+
   const [ad, setAd] = useState({
     photos: [],
     uploading: false,
@@ -37,12 +43,21 @@ export default function AdForm({ action, type }) {
         toast.error(data.error);
         setAd({ ...ad, loading: false });
       } else {
+        //data contains ad and user 
+        //update user in local storage
+        const fromLocalStorage = JSON.parse(localStorage.getItem("auth"));
+        fromLocalStorage.user=data.user;
+        localStorage.setItem('auth',JSON.stringify(fromLocalStorage))
+        //update user in context
+        setAuth({...ad,user:data.user})
         toast.success("Advert created sucessfully");
+        window.location.href="/dashboard"
       }
     } catch (err) {
       console.log(err);
       setAd({ ...ad, loading: false });
-      navigate("/dashboard");
+     //reload page 
+     
     }
   };
 
