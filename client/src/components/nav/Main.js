@@ -33,7 +33,13 @@ export default function Main() {
       <NavLink className="nav-link " aria-current="page" to="/">
         Home
       </NavLink>
-      <a className="nav-link pointer" onClick={handlePostAd}>Post Ad</a>
+      <NavLink className="nav-link " aria-current="page" to="/Agents">
+        Agents
+      </NavLink>
+
+      <a className="nav-link pointer" onClick={handlePostAd}>
+        Post Ad
+      </a>
       {!loggedIn ? (
         <>
           <NavLink className="nav-link" to="/login">
@@ -50,7 +56,10 @@ export default function Main() {
       {loggedIn ? (
         <div className="dropdown">
           <li>
-            <a className="nav-link dropdown-toggle pointer" data-bs-toggle="dropdown">
+            <a
+              className="nav-link dropdown-toggle pointer"
+              data-bs-toggle="dropdown"
+            >
               {auth?.user?.name ? auth.user.name : auth.user.username}
             </a>
             <ul className="dropdown-menu">

@@ -306,7 +306,7 @@ export const updateProfile = async (req, res) => {
 export const agents = async (req, res) => {
   try {
     const agents = await User.find({ role: "Seller" }).select(
-      "-password -role -enquiredProperties -wishlist -photo.key -photo.Bucket "
+      "-password -role -enquiredProperties -wishlist -photo.key -photo.Key -photo.Bucket "
     );
     res.json(agents);
   } catch (err) {
@@ -316,7 +316,7 @@ export const agents = async (req, res) => {
 
 export const advertCount = async (req, res) => {
   try {
-    const ads = Ad.find({ postedBy: req.params._id }).select("_id");
+    const ads = ad.find({ postedBy: req.params._id }).select("_id");
     res.json(ads);
   } catch (err) {
     console.log(err);
@@ -325,7 +325,7 @@ export const advertCount = async (req, res) => {
 export const agent = async (req, res) => {
   try {
     const user = await User.findOne({ username: req.params.username }).select(
-      "-password -role -enquiredProperties -wishlist -photo.key -photo.Bucket "
+      "-password -role -enquiredProperties -wishlist -photo.key -photo.Key -photo.Bucket "
     );
     const adverts = await ad
       .find({ postedBy: user._id })

@@ -28,6 +28,8 @@ import Wishlist from "./pages/user/Wishlist";
 import Enquiries from "./pages/user/Enquiries";
 
 
+import Agents from "../src/pages/Agents"
+
 
 function App() {
   return (
@@ -65,6 +67,7 @@ function App() {
             <Route path="user/enquiries" element ={<Enquiries/>} />
           </Route>
           <Route path="/ad/:slug" element={<AdView />} />
+          <Route path="/agents" element={<Agents/>} />
         </Routes>
         <Footer />
       </AuthProvider>
