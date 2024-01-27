@@ -255,16 +255,59 @@ export const userAds = async (req, res) => {
   try {
     const perPage = 2;
     const page = req.params.page ? req.params.page : 1;
-    const total = await Ad.find({ postedBy: req.user._id });//All the posts by logged in user to get total
+    const total = await Ad.find({ postedBy: req.user._id }); //All the posts by logged in user to get total
 
-    const ads = await Ad.find({ postedBy: req.user._id })  //Supports load more feature
+    const ads = await Ad.find({ postedBy: req.user._id }) //Supports load more feature
       // .select("-photos.key -photos.Key -photos.Bucket -photos.ETag  -location -googleMap ") //deselect to reduce traffic we dont need
       .populate("postedBy", "name email username phone company")
       .skip((page - 1) * perPage)
       .limit(perPage)
       .sort({ createdAt: -1 });
 
-      res.json({ads,total:total.length}) 
+    res.json({ ads, total: total.length });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const updateAd = async (req, res) => {
+  try {
+    const { photos, price, type, address, description } = req.body;
+    const ad = await Ad.findById(req.params._id);
+    const owner = req.user._id == ad?.postedBy;
+    if (!owner) {
+      res.json({ error: "Permission Denied" });
+    } else {
+      if (!photos.length) {
+        return res.json({ error: "Photos are required" });
+      }
+      if (!type) {
+        return res.json({ error: "Is it house or land" });
+      }
+      if (!address) {
+        return res.json({ error: "Address is required" });
+      }
+      if (!description) {
+        return res.json({ error: "Description is required" });
+      }
+      if (!price) {
+        return res.json({ error: "Price is required" });
+      }
+
+      // Location update
+
+      const geo = await config.GOOGLE_GEOCODER.geocode(address);
+
+      await ad.updateOne({
+        ...req.body,
+        slug: ad.slug, //for consistency we shouldnt change the initial slug as some users already have that slug
+        location: {
+          type: "Point",
+          coordinates: [geo?.[0]?.longitude, geo?.[0]?.latitude],
+        },
+      });
+      res.json({ ok: "Success" });
+    }
   } catch (err) {
     console.log(err);
   }

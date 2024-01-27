@@ -22,4 +22,8 @@ const router=express.Router();
 
  router.get("/user-ads/:page",requireSignin,ad.userAds)
 
+ //edit
+
+ router.put("/ad/:_id",requireSignin,ad.updateAd)
+
  export default router
