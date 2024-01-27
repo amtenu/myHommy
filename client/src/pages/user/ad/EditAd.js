@@ -8,6 +8,7 @@ import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 import Sidebar from "../../../components/nav/Sidebar";
 
+
 export default function EditAd({ action, type }) {
   //state to hold all the privious data
   const [ad, setAd] = useState({
@@ -29,6 +30,8 @@ export default function EditAd({ action, type }) {
     action,
   });
 
+  const [loaded ,setLoaded]=useState(false)
+
   //hooks
 
   const navigate = useNavigate();
@@ -45,20 +48,34 @@ export default function EditAd({ action, type }) {
 
   const handleClick = async () => {
     try {
-      setAd({ ...ad, loading: true });
-      const { data } = await axios.put(`/ad/${ad._id}`, ad);
-      console.log("Show single page data =>", data);
+      //checking required fields
 
-      if (data?.error) {
-        toast.error(data.error);
-        setAd({ ...ad, loading: false });
+      if (!ad.photos?.length) {
+        toast.error("Photo is required!");
+        return;
+      } else if (!ad.price) {
+        toast.error("price is required!");
+        return;
+      } else if (!ad.description) {
+        toast.error("Description is required!");
+        return;
       } else {
-        toast.success("Advert created sucessfully");
+        setAd({ ...ad, loading: true });
+        const { data } = await axios.put(`/ad/${ad._id}`, ad);
+        console.log("Show single page data =>", data);
+
+        if (data?.error) {
+          toast.error(data.error);
+          setAd({ ...ad, loading: false });
+        } else {
+          toast.success("Advert updated sucessfully");
+          setAd({ ...ad, loading: false });
+          navigate("/dashboard");
+        }
       }
     } catch (err) {
       console.log(err);
       setAd({ ...ad, loading: false });
-      navigate("/dashboard");
     }
   };
 
@@ -68,6 +85,7 @@ export default function EditAd({ action, type }) {
       //   console.log(data)//data consists of related data as well so need to remove related
 
       setAd(data?.ad);
+      setLoaded(true )
     } catch (err) {
       console.log(err);
     }
@@ -80,7 +98,7 @@ export default function EditAd({ action, type }) {
       <div className="container">
         <div className="form-control mb-3">
           <ImageUpload ad={ad} setAd={setAd} />
-          {ad?.address ? (
+          {loaded? (
             <GooglePlacesAutocomplete
               apiKey={GOOGLE_PLACES_KEY}
               apiOptions="ca"
@@ -96,7 +114,7 @@ export default function EditAd({ action, type }) {
           )}
         </div>
         <div style={{ marginTop: "80px" }}>
-          {ad?.price ? (
+          {loaded ? (
             <CurrencyInput
               placeholder="Please Enter price"
               defaultValue={ad.price}
