@@ -6,6 +6,8 @@ import User from "../models/user.js";
 import { nanoid } from "nanoid";
 import emailVaidator from "email-validator";
 
+import ad from "../models/ad.js";
+
 export const welcome = (req, res) => {
   res.json({
     data: "Hello from nodejs api",
@@ -298,5 +300,41 @@ export const updateProfile = async (req, res) => {
       return res.json({ error: "Username or email is already taken" });
     }
     return res.status(403).json({ error: "Unauthorized" });
+  }
+};
+
+export const agents = async (req, res) => {
+  try {
+    const agents = await User.find({ role: "Seller" }).select(
+      "-password -role -enquiredProperties -wishlist -photo.key -photo.Bucket "
+    );
+    res.json(agents);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const advertCount = async (req, res) => {
+  try {
+    const ads = Ad.find({ postedBy: req.params._id }).select("_id");
+    res.json(ads);
+  } catch (err) {
+    console.log(err);
+  }
+};
+export const agent = async (req, res) => {
+  try {
+    const user = await User.findOne({ username: req.params.username }).select(
+      "-password -role -enquiredProperties -wishlist -photo.key -photo.Bucket "
+    );
+    const adverts = await ad
+      .find({ postedBy: user._id })
+      .select(
+        "-password -photos.key -photos.Key photos.Etag -photos.Bucket -location -googleMap"
+      );
+
+      res.json(user,adverts)
+  } catch (err) {
+    console.log(err);
   }
 };

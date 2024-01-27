@@ -32,4 +32,6 @@ const router=express.Router();
 
  router.delete("/ad/:_id",requireSignin,ad.remove)
 
+
+
  export default router

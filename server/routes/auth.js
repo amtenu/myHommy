@@ -17,6 +17,11 @@ router.get('/profile/:username',auth.publicProfile)
 router.put('/update-password',requireSignin,auth.updatePassword)
 router.put('/update-profile',requireSignin,auth.updateProfile)
 
+//Agent is like a user
+
+router.get("/agents",auth.agents)
+router.get("/agent-advert-count/:_id",auth.advertCount)
+router.get("/agent/:username",auth.agent)
 
 
 
