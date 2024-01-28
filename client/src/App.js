@@ -30,6 +30,8 @@ import Enquiries from "./pages/user/Enquiries";
 
 import Agents from "../src/pages/Agents"
 
+import AgentProfile from "./pages/user/AgentProfile";
+
 
 function App() {
   return (
@@ -68,6 +70,7 @@ function App() {
           </Route>
           <Route path="/ad/:slug" element={<AdView />} />
           <Route path="/agents" element={<Agents/>} />
+          <Route path="/agent/:username" element={<AgentProfile/>} />
         </Routes>
         <Footer />
       </AuthProvider>

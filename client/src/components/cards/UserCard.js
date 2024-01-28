@@ -33,7 +33,7 @@ if(user?._id){
 
   return (
     <div className="col-lg-4 p-4 gx-4 gy-4">
-      <Link to={`/user/${user.username}`}>
+      <Link to={`/agent/${user.username}`}>
         <Badge.Ribbon
           text={`Has ${count} listings.`}
         //   color={`${ad?.action === "Sell" ? "red" : "blue"}`}
