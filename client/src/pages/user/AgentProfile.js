@@ -20,7 +20,7 @@ export default function AgentProfile() {
       console.log("Data", data);
       setAgent(data.user);
 
-      setAds(data.ads);
+      setAds(data.adverts);
       setLoading(false);
     } catch (err) {
       console.log(err);
@@ -49,6 +49,14 @@ export default function AgentProfile() {
           <div className="col-lg-4" />
           <UserCard user={agent} />
           <div className="col-lg-4" />
+        </div>
+      </div>
+      <h2 className="text-center m-5"> Recent Listings</h2>
+      <div className="container">
+        <div className="row">
+          {ads?.map((ad) => (
+            <AdCard ad={ad} key={ad._id} />
+          ))}
         </div>
       </div>
     </div>
