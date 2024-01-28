@@ -31,6 +31,9 @@ const router=express.Router();
  //delete ad
 
  router.delete("/ad/:_id",requireSignin,ad.remove)
+ 
+ //search
+ router.get("/search",ad.search)
 
 
 

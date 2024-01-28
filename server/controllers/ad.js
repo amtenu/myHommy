@@ -316,7 +316,9 @@ export const updateAd = async (req, res) => {
 export const enquiriedProperties = async (req, res) => {
   try {
     const user = await User.findById(req.user._id);
-    const ads = await Ad.find({ _id: user.enquiredProperties }).sort({createdAt:-1});
+    const ads = await Ad.find({ _id: user.enquiredProperties }).sort({
+      createdAt: -1,
+    });
     res.json(ads);
   } catch (err) {
     console.log(err);
@@ -326,9 +328,9 @@ export const enquiriedProperties = async (req, res) => {
 export const wishListed = async (req, res) => {
   try {
     const user = await User.findById(req.user._id);
-    const ads = await Ad.find({ _id: user.wishlist }).sort({createdAt:-1});
+    const ads = await Ad.find({ _id: user.wishlist }).sort({ createdAt: -1 });
     res.json(ads);
-    console.log(ads)
+    console.log(ads);
   } catch (err) {
     console.log(err);
   }
@@ -336,15 +338,52 @@ export const wishListed = async (req, res) => {
 
 export const remove = async (req, res) => {
   try {
-    const ad=await Ad.findById(req.params._id);
+    const ad = await Ad.findById(req.params._id);
     const owner = req.user._id == ad?.postedBy;
-    
-    if(!owner){
-      return res.json ({error:"Permission Denied"});
+
+    if (!owner) {
+      return res.json({ error: "Permission Denied" });
     } else {
       await Ad.findByIdAndDelete(ad._id);
-      return res.json({ok:true})
+      return res.json({ ok: true });
     }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const search = async (req, res) => {
+  try {
+    // console.log("Query from search page ", req.query);
+
+    const { action, address, type, priceRange } = req.query;
+
+    const geo = await config.GOOGLE_GEOCODER.geocode(address);
+
+    const ads = await Ad.find({
+      action: action === "Buy" ? "Sell" : "Rent",
+      type,
+      price: {
+        $gte: parseInt(priceRange[0]),
+        $lte: parseInt(priceRange[1]),
+      },
+      location: {
+        $near: {
+          $maxDistance: 100000, //1000m=1km
+          $geometry: {
+            type: "Point",
+            coordinates: [geo?.[0]?.longitude, geo?.[0]?.latitude],
+          },
+        },
+      },
+    })
+      .limit(24)
+      .sort({ createdAt: -1 })
+      .select(
+        "-photos.key -photos.Key -photos.Etag -photos.Bucket -location -googlemap"
+      );
+
+      res.json(ads)
   } catch (err) {
     console.log(err);
   }

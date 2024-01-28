@@ -1,16 +1,44 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { useState } from "react";
+
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import { useSearch } from "../../context/Search";
 import { GOOGLE_PLACES_KEY } from "../../config/config";
 import { sellPrices, rentPrices } from "../../helpers/PriceList";
 import { GrCheckboxSelected } from "react-icons/gr";
+import axios from "axios";
+
+import queryString from "query-string";
+import { useNavigate } from "react-router-dom";
+
 
 
 export default function SearchForm() {
   //context
 
   const [search, setSearch] = useSearch();
+
+  //hooks
+
+  const navigate = useNavigate();
+
+  const handleSearch = async () => {
+    setSearch({ ...search, loading: false });
+    try {
+      const { result, page, price, ...rest } = search;
+      const query = queryString.stringify(rest);
+      const { data } = await axios.get(`/search?${query}`);
+      if (search?.page !== "/search") {
+        setSearch((prev) => ({ ...prev, result: data, loading: false }));
+        navigate('/search')
+      } else {
+        setSearch((prev) => ({ ...prev, result: data, page:window.location.pathname,loading: false }));
+      }
+    } catch (err) {
+      console.log(err);
+      setSearch({ ...search, loading: false });
+    }
+  };
+
   return (
     <>
       <div className="container   m-5">
@@ -33,25 +61,49 @@ export default function SearchForm() {
             className="btn btn-primary col-lg-2 square"
             onClick={() => setSearch({ ...search, action: "Buy", price: "" })}
           >
-            {search.action ==="Buy" ?<><GrCheckboxSelected/> BUY</> :"Buy"}
+            {search.action === "Buy" ? (
+              <>
+                <GrCheckboxSelected /> BUY
+              </>
+            ) : (
+              "Buy"
+            )}
           </button>
           <button
             className="btn btn-primary col-lg-2 square"
             onClick={() => setSearch({ ...search, action: "Rent", price: "" })}
           >
-            {search.action ==="Rent" ?<><GrCheckboxSelected/> RENT</> :"RENT"}
+            {search.action === "Rent" ? (
+              <>
+                <GrCheckboxSelected /> RENT
+              </>
+            ) : (
+              "RENT"
+            )}
           </button>
           <button
             className="btn btn-primary col-lg-2 square"
             onClick={() => setSearch({ ...search, type: "House", price: "" })}
           >
-            {search.type ==="House" ?<><GrCheckboxSelected/> HOUSE</> :"HOUSE"}
+            {search.type === "House" ? (
+              <>
+                <GrCheckboxSelected /> HOUSE
+              </>
+            ) : (
+              "HOUSE"
+            )}
           </button>
           <button
             className="btn btn-primary col-lg-2 square"
-            onClick={() => setSearch({ ...search, type: "Land", price: ""})}
+            onClick={() => setSearch({ ...search, type: "Land", price: "" })}
           >
-           {search.type ==="Land" ?<><GrCheckboxSelected/> LAND</> :"LAND"}
+            {search.type === "Land" ? (
+              <>
+                <GrCheckboxSelected /> LAND
+              </>
+            ) : (
+              "LAND"
+            )}
           </button>
           <div className="dropdown">
             <button
@@ -60,7 +112,7 @@ export default function SearchForm() {
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
-              &nbsp; {search?.price ? search.price :"Price"}
+              &nbsp; {search?.price ? search.price : "Price"}
             </button>
             <ul className="dropdown-menu">
               {search.action === "Buy" ? (
@@ -104,9 +156,16 @@ export default function SearchForm() {
               )}
             </ul>
           </div>
-          <button className="btn btn-danger col-lg-2 square">Search</button>
+          <button
+            onClick={handleSearch}
+            className="btn btn-danger col-lg-2 square"
+          >
+            Search
+          </button>
         </div>
       </div>
     </>
+
+   
   );
 }
