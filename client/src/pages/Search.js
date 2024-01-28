@@ -11,15 +11,15 @@ export default function Search() {
       <h1 className="display-1 bg-primary text-light p-5">Search</h1>
       <SearchForm />
 
-      <div>
-        <div>
+      <div className="container">
+        <div className="row">
           {search.result?.length > 0 ? (
-            <div>Found {search.result.length} result</div>
+            <div className="col-md-12 text-center p-5 ">Found {search.result.length} result</div>
           ) : (
-            <div>No Properties Found.</div>
+            <div className="col-md-12 text-center p-5">No Properties Found.</div>
           )}
         </div>
-        <div>
+        <div className="row">
           {search.result?.map((item) => (
             <AdCard ad={item}  key={item._id} />
           ))}
