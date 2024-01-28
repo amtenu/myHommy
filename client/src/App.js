@@ -35,6 +35,8 @@ import Agents from "../src/pages/Agents"
 
 import AgentProfile from "./pages/user/AgentProfile";
 
+import Search from "./pages/Search";
+
 
 
 
@@ -80,6 +82,7 @@ function App() {
 
           <Route path ="/buy" element={<Buy/>}/>
           <Route path="/rent" element={<Rent/>} />
+          <Route path="/search" element={<Search/>}/>
 
         </Routes>
         <Footer />

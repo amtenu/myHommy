@@ -2,6 +2,7 @@ import axios from "axios";
 import { useAuth } from "../context/auth";
 import { useEffect, useState } from "react";
 import AdCard from "../components/cards/AdCard";
+import SearchForm from "../components/form/SearchForm";
 
 export default function Rent() {
   //context from Auth
@@ -27,8 +28,7 @@ export default function Rent() {
 
   return (
     <div>
-    
-
+      <SearchForm />
       <h1 className="display-1 bg-primary text-light p-5">For Rent</h1>
       {/*<pre>{JSON.stringify({adsForSell,adsForRent}, null, 5)}</pre>*/}
       <div className="container">
