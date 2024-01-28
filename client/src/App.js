@@ -26,11 +26,15 @@ import Profile from "./pages/user/Profile";
 import Settings from "./pages/user/Settings";
 import Wishlist from "./pages/user/Wishlist";
 import Enquiries from "./pages/user/Enquiries";
+import Buy from "./pages/Buy";
+import Rent from "./pages/Rent"
 
 
 import Agents from "../src/pages/Agents"
 
 import AgentProfile from "./pages/user/AgentProfile";
+
+
 
 
 function App() {
@@ -71,6 +75,10 @@ function App() {
           <Route path="/ad/:slug" element={<AdView />} />
           <Route path="/agents" element={<Agents/>} />
           <Route path="/agent/:username" element={<AgentProfile/>} />
+
+          <Route path ="/buy" element={<Buy/>}/>
+          <Route path="/rent" element={<Rent/>} />
+
         </Routes>
         <Footer />
       </AuthProvider>

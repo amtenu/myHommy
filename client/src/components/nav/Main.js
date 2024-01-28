@@ -33,6 +33,12 @@ export default function Main() {
       <NavLink className="nav-link " aria-current="page" to="/">
         Home
       </NavLink>
+      <NavLink className="nav-link " aria-current="page" to="/buy">
+        Buy
+      </NavLink>
+      <NavLink className="nav-link " aria-current="page" to="/rent">
+        Rent
+      </NavLink>
       <NavLink className="nav-link " aria-current="page" to="/Agents">
         Agents
       </NavLink>
