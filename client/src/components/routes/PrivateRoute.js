@@ -4,6 +4,8 @@ import { Outlet } from "react-router-dom";
 import { useAuth } from "../../context/auth";
 import axios from "axios";
 
+import Redirect from "./Redirect";
+
 //We have current-user in the API
 export default function PrivateRoute() {
   const [auth, setAuth] = useAuth();
@@ -27,5 +29,5 @@ export default function PrivateRoute() {
     }
   };
 
-  return ok?<Outlet/> :"" //Outlet is children props
+  return ok?<Outlet/> : <Redirect/>//Outlet is children props
 }
