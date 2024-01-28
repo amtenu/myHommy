@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/auth";
+import { SearchProvider } from "./context/Search";
 import Main from "./components/nav/Main";
 import { Toaster } from "react-hot-toast";
 
@@ -41,6 +42,7 @@ function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
+        <SearchProvider>
         <Main />
         <Toaster />
         <Routes>
@@ -81,7 +83,9 @@ function App() {
 
         </Routes>
         <Footer />
+        </SearchProvider>
       </AuthProvider>
+   
     </BrowserRouter>
   );
 }
