@@ -327,13 +327,12 @@ export const agent = async (req, res) => {
     const user = await User.findOne({ username: req.params.username }).select(
       "-password -role -enquiredProperties -wishlist -photo.key -photo.Key -photo.Bucket "
     );
-    const adverts = await ad
-      .find({ postedBy: user._id })
+    const adverts = await ad.find({ postedBy: user._id })
       .select(
-        "-password -photos.key -photos.Key photos.Etag -photos.Bucket -location -googleMap"
+        "-password -photos.key -photos.Key -photos.Etag -photos.Bucket -location -googleMap"
       );
 
-      res.json(user,adverts)
+      res.json({user,adverts})
   } catch (err) {
     console.log(err);
   }
