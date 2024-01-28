@@ -4,10 +4,10 @@ const SearchContext = createContext();
 
 const initialState = {
   address: "",
-  action: "Buy",
+  action: "Buy  ",
   type: "House",
   price: "",
-  priceRange: [0, 1000000],
+  priceRange: [0, 10000000],
   results: [],
   page: "",
   loading: false,
